@@ -43,6 +43,7 @@
 #include "common/encoding.hpp"
 #include "common/instance.hpp"
 #include "common/locator_getters.hpp"
+#include "common/owned_ptr.hpp"
 #include "common/random.hpp"
 #include "common/serial_number.hpp"
 #include "common/settings.hpp"
@@ -1031,16 +1032,15 @@ const LeaderData &Mle::GetLeaderData(void)
     return mLeaderData;
 }
 
-Message *Mle::NewMleMessage(Command aCommand)
+Error Mle::AllocateMleMessage(Command aCommand, OwnedPtr<Message> &aMessage)
 {
     Error             error = kErrorNone;
-    Message *         message;
     Message::Settings settings(Message::kNoLinkSecurity, Message::kPriorityNet);
     Message::SubType  subType;
     uint8_t           securitySuite;
 
-    message = mSocket.NewMessage(0, settings);
-    VerifyOrExit(message != nullptr, error = kErrorNoBufs);
+    aMessage.Reset(mSocket.NewMessage(0, settings));
+    VerifyOrExit(aMessage != nullptr, error = kErrorNoBufs);
 
     securitySuite = k154Security;
     subType       = Message::kSubTypeMleGeneral;
@@ -1081,9 +1081,9 @@ Message *Mle::NewMleMessage(Command aCommand)
         break;
     }
 
-    message->SetSubType(subType);
+    aMessage->SetSubType(subType);
 
-    SuccessOrExit(error = message->Append(securitySuite));
+    SuccessOrExit(error = aMessage->Append(securitySuite));
 
     if (securitySuite == k154Security)
     {
@@ -1093,14 +1093,13 @@ Message *Mle::NewMleMessage(Command aCommand)
         // message in `SendMessage()` before message is sent.
 
         securityHeader.InitSecurityControl();
-        SuccessOrExit(error = message->Append(securityHeader));
+        SuccessOrExit(error = aMessage->Append(securityHeader));
     }
 
-    error = message->Append<uint8_t>(aCommand);
+    error = aMessage->Append<uint8_t>(aCommand);
 
 exit:
-    FreeAndNullMessageOnError(message, error);
-    return message;
+    return error;
 }
 
 Error Mle::AppendSourceAddress(Message &aMessage) const
@@ -2066,17 +2065,17 @@ void Mle::HandleDelayedResponseTimer(void)
 
 void Mle::SendDelayedResponse(Message &aMessage, const DelayedResponseMetadata &aMetadata)
 {
-    Error error = kErrorNone;
+    OwnedPtr<Message> ownedMsgPtr(&aMessage);
 
     aMetadata.RemoveFrom(aMessage);
 
     if (aMessage.GetSubType() == Message::kSubTypeMleDataRequest)
     {
-        SuccessOrExit(error = AppendActiveTimestamp(aMessage));
-        SuccessOrExit(error = AppendPendingTimestamp(aMessage));
+        SuccessOrExit(AppendActiveTimestamp(aMessage));
+        SuccessOrExit(AppendPendingTimestamp(aMessage));
     }
 
-    SuccessOrExit(error = SendMessage(aMessage, aMetadata.mDestination));
+    SuccessOrExit(SendMessage(ownedMsgPtr, aMetadata.mDestination));
 
     Log(kMessageSend, kTypeGenericDelayed, aMetadata.mDestination);
 
@@ -2090,7 +2089,7 @@ void Mle::SendDelayedResponse(Message &aMessage, const DelayedResponseMetadata &
     }
 
 exit:
-    FreeMessageOnError(&aMessage, error);
+    return;
 }
 
 void Mle::RemoveDelayedDataResponseMessage(void)
@@ -2122,10 +2121,9 @@ void Mle::RemoveDelayedMessage(Message::SubType aSubType, MessageType aMessageTy
 
 void Mle::SendParentRequest(ParentRequestType aType)
 {
-    Error        error = kErrorNone;
-    Message *    message;
-    uint8_t      scanMask = 0;
-    Ip6::Address destination;
+    OwnedPtr<Message> message;
+    uint8_t           scanMask = 0;
+    Ip6::Address      destination;
 
     mParentRequestChallenge.GenerateRandom();
 
@@ -2140,17 +2138,17 @@ void Mle::SendParentRequest(ParentRequestType aType)
         break;
     }
 
-    VerifyOrExit((message = NewMleMessage(kCommandParentRequest)) != nullptr, error = kErrorNoBufs);
-    SuccessOrExit(error = AppendMode(*message, mDeviceMode));
-    SuccessOrExit(error = AppendChallenge(*message, mParentRequestChallenge));
-    SuccessOrExit(error = AppendScanMask(*message, scanMask));
-    SuccessOrExit(error = AppendVersion(*message));
+    SuccessOrExit(AllocateMleMessage(kCommandParentRequest, message));
+    SuccessOrExit(AppendMode(*message, mDeviceMode));
+    SuccessOrExit(AppendChallenge(*message, mParentRequestChallenge));
+    SuccessOrExit(AppendScanMask(*message, scanMask));
+    SuccessOrExit(AppendVersion(*message));
 #if OPENTHREAD_CONFIG_TIME_SYNC_ENABLE
-    SuccessOrExit(error = AppendTimeRequest(*message));
+    SuccessOrExit(AppendTimeRequest(*message));
 #endif
 
     destination.SetToLinkLocalAllRoutersMulticast();
-    SuccessOrExit(error = SendMessage(*message, destination));
+    SuccessOrExit(SendMessage(message, destination));
 
     switch (aType)
     {
@@ -2164,7 +2162,7 @@ void Mle::SendParentRequest(ParentRequestType aType)
     }
 
 exit:
-    FreeMessageOnError(message, error);
+    return;
 }
 
 void Mle::RequestShorterChildIdRequest(void)
@@ -2178,11 +2176,11 @@ void Mle::RequestShorterChildIdRequest(void)
 
 Error Mle::SendChildIdRequest(void)
 {
-    Error        error   = kErrorNone;
-    uint8_t      tlvs[]  = {Tlv::kAddress16, Tlv::kNetworkData, Tlv::kRoute};
-    uint8_t      tlvsLen = sizeof(tlvs);
-    Message *    message = nullptr;
-    Ip6::Address destination;
+    Error             error   = kErrorNone;
+    uint8_t           tlvs[]  = {Tlv::kAddress16, Tlv::kNetworkData, Tlv::kRoute};
+    uint8_t           tlvsLen = sizeof(tlvs);
+    OwnedPtr<Message> message;
+    Ip6::Address      destination;
 
     if (mParent.GetExtAddress() == mParentCandidate.GetExtAddress())
     {
@@ -2202,7 +2200,7 @@ Error Mle::SendChildIdRequest(void)
         }
     }
 
-    VerifyOrExit((message = NewMleMessage(kCommandChildIdRequest)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandChildIdRequest, message));
     SuccessOrExit(error = AppendResponse(*message, mParentCandidateChallenge));
     SuccessOrExit(error = AppendLinkFrameCounter(*message));
     SuccessOrExit(error = AppendMleFrameCounter(*message));
@@ -2225,7 +2223,7 @@ Error Mle::SendChildIdRequest(void)
     mParentCandidate.SetState(Neighbor::kStateValid);
 
     destination.SetToLinkLocalAddress(mParentCandidate.GetExtAddress());
-    SuccessOrExit(error = SendMessage(*message, destination));
+    SuccessOrExit(error = SendMessage(message, destination));
 
     Log(kMessageSend,
         (mAddressRegistrationMode == kAppendMeshLocalOnly) ? kTypeChildIdRequestShort : kTypeChildIdRequest,
@@ -2238,7 +2236,6 @@ Error Mle::SendChildIdRequest(void)
     }
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 
@@ -2249,12 +2246,12 @@ Error Mle::SendDataRequest(const Ip6::Address &aDestination,
                            const uint8_t *     aExtraTlvs,
                            uint8_t             aExtraTlvsLength)
 {
-    Error    error = kErrorNone;
-    Message *message;
+    Error             error = kErrorNone;
+    OwnedPtr<Message> message;
 
     RemoveDelayedDataRequestMessage(aDestination);
 
-    VerifyOrExit((message = NewMleMessage(kCommandDataRequest)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandDataRequest, message));
     SuccessOrExit(error = AppendTlvRequest(*message, aTlvs, aTlvsLength));
 
     if (aExtraTlvs != nullptr && aExtraTlvsLength > 0)
@@ -2264,7 +2261,7 @@ Error Mle::SendDataRequest(const Ip6::Address &aDestination,
 
     if (aDelay)
     {
-        SuccessOrExit(error = AddDelayedResponse(*message, aDestination, aDelay));
+        SuccessOrExit(error = AddDelayedResponse(message, aDestination, aDelay));
         Log(kMessageDelay, kTypeDataRequest, aDestination);
     }
     else
@@ -2272,7 +2269,7 @@ Error Mle::SendDataRequest(const Ip6::Address &aDestination,
         SuccessOrExit(error = AppendActiveTimestamp(*message));
         SuccessOrExit(error = AppendPendingTimestamp(*message));
 
-        SuccessOrExit(error = SendMessage(*message, aDestination));
+        SuccessOrExit(error = SendMessage(message, aDestination));
         Log(kMessageSend, kTypeDataRequest, aDestination);
 
         if (!IsRxOnWhenIdle())
@@ -2282,8 +2279,6 @@ Error Mle::SendDataRequest(const Ip6::Address &aDestination,
     }
 
 exit:
-    FreeMessageOnError(message, error);
-
     if (IsChild() && !IsRxOnWhenIdle())
     {
         mDataRequestState = kDataRequestActive;
@@ -2424,8 +2419,8 @@ Error Mle::SendChildUpdateRequest(void)
 {
     Error                   error = kErrorNone;
     Ip6::Address            destination;
-    Message *               message = nullptr;
-    AddressRegistrationMode mode    = kAppendAllAddresses;
+    OwnedPtr<Message>       message;
+    AddressRegistrationMode mode = kAppendAllAddresses;
 
     if (!mParent.IsStateValidOrRestoring())
     {
@@ -2437,7 +2432,7 @@ Error Mle::SendChildUpdateRequest(void)
     mChildUpdateRequestState = kChildUpdateRequestActive;
     ScheduleMessageTransmissionTimer();
 
-    VerifyOrExit((message = NewMleMessage(kCommandChildUpdateRequest)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandChildUpdateRequest, message));
     SuccessOrExit(error = AppendMode(*message, mDeviceMode));
 
     switch (mRole)
@@ -2474,7 +2469,7 @@ Error Mle::SendChildUpdateRequest(void)
     }
 
     destination.SetToLinkLocalAddress(mParent.GetExtAddress());
-    SuccessOrExit(error = SendMessage(*message, destination));
+    SuccessOrExit(error = SendMessage(message, destination));
 
     Log(kMessageSend, kTypeChildUpdateRequestOfParent, destination);
 
@@ -2493,18 +2488,17 @@ Error Mle::SendChildUpdateRequest(void)
     }
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 
 Error Mle::SendChildUpdateResponse(const uint8_t *aTlvs, uint8_t aNumTlvs, const Challenge &aChallenge)
 {
-    Error        error = kErrorNone;
-    Ip6::Address destination;
-    Message *    message;
-    bool         checkAddress = false;
+    Error             error = kErrorNone;
+    Ip6::Address      destination;
+    OwnedPtr<Message> message;
+    bool              checkAddress = false;
 
-    VerifyOrExit((message = NewMleMessage(kCommandChildUpdateResponse)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandChildUpdateResponse, message));
     SuccessOrExit(error = AppendSourceAddress(*message));
     SuccessOrExit(error = AppendLeaderData(*message));
 
@@ -2558,7 +2552,7 @@ Error Mle::SendChildUpdateResponse(const uint8_t *aTlvs, uint8_t aNumTlvs, const
     }
 
     destination.SetToLinkLocalAddress(mParent.GetExtAddress());
-    SuccessOrExit(error = SendMessage(*message, destination));
+    SuccessOrExit(error = SendMessage(message, destination));
 
     Log(kMessageSend, kTypeChildUpdateResponseOfParent, destination);
 
@@ -2568,7 +2562,6 @@ Error Mle::SendChildUpdateResponse(const uint8_t *aTlvs, uint8_t aNumTlvs, const
     }
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 
@@ -2583,42 +2576,41 @@ void Mle::SendAnnounce(uint8_t aChannel, AnnounceMode aMode)
 
 void Mle::SendAnnounce(uint8_t aChannel, const Ip6::Address &aDestination, AnnounceMode aMode)
 {
-    Error              error = kErrorNone;
     ChannelTlv         channel;
     MeshCoP::Timestamp activeTimestamp;
-    Message *          message = nullptr;
+    OwnedPtr<Message>  message;
 
-    VerifyOrExit(Get<Mac::Mac>().GetSupportedChannelMask().ContainsChannel(aChannel), error = kErrorInvalidArgs);
-    VerifyOrExit((message = NewMleMessage(kCommandAnnounce)) != nullptr, error = kErrorNoBufs);
+    VerifyOrExit(Get<Mac::Mac>().GetSupportedChannelMask().ContainsChannel(aChannel));
+    SuccessOrExit(AllocateMleMessage(kCommandAnnounce, message));
     message->SetLinkSecurityEnabled(true);
     message->SetChannel(aChannel);
 
     channel.Init();
     channel.SetChannelPage(0);
     channel.SetChannel(Get<Mac::Mac>().GetPanChannel());
-    SuccessOrExit(error = channel.AppendTo(*message));
+    SuccessOrExit(channel.AppendTo(*message));
 
     switch (aMode)
     {
     case kOrphanAnnounce:
         activeTimestamp.Clear();
         activeTimestamp.SetAuthoritative(true);
-        SuccessOrExit(error = Tlv::Append<ActiveTimestampTlv>(*message, activeTimestamp));
+        SuccessOrExit(Tlv::Append<ActiveTimestampTlv>(*message, activeTimestamp));
         break;
 
     case kNormalAnnounce:
-        SuccessOrExit(error = AppendActiveTimestamp(*message));
+        SuccessOrExit(AppendActiveTimestamp(*message));
         break;
     }
 
-    SuccessOrExit(error = Tlv::Append<PanIdTlv>(*message, Get<Mac::Mac>().GetPanId()));
+    SuccessOrExit(Tlv::Append<PanIdTlv>(*message, Get<Mac::Mac>().GetPanId()));
 
-    SuccessOrExit(error = SendMessage(*message, aDestination));
+    SuccessOrExit(SendMessage(message, aDestination));
 
     LogInfo("Send Announce on channel %d", aChannel);
 
 exit:
-    FreeMessageOnError(message, error);
+    return;
 }
 
 Error Mle::GetNextAnnouceChannel(uint8_t &aChannel) const
@@ -2647,12 +2639,12 @@ bool Mle::HasMoreChannelsToAnnouce(void) const
 #if OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE
 Error Mle::SendLinkMetricsManagementResponse(const Ip6::Address &aDestination, LinkMetrics::Status aStatus)
 {
-    Error    error = kErrorNone;
-    Message *message;
-    Tlv      tlv;
-    ot::Tlv  statusSubTlv;
+    Error             error = kErrorNone;
+    OwnedPtr<Message> message;
+    Tlv               tlv;
+    ot::Tlv           statusSubTlv;
 
-    VerifyOrExit((message = NewMleMessage(kCommandLinkMetricsManagementResponse)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandLinkMetricsManagementResponse, message));
 
     tlv.SetType(Tlv::kLinkMetricsManagement);
     statusSubTlv.SetType(LinkMetrics::SubTlv::kStatus);
@@ -2663,10 +2655,9 @@ Error Mle::SendLinkMetricsManagementResponse(const Ip6::Address &aDestination, L
     SuccessOrExit(error = message->Append(statusSubTlv));
     SuccessOrExit(error = message->Append(aStatus));
 
-    SuccessOrExit(error = SendMessage(*message, aDestination));
+    error = SendMessage(message, aDestination);
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 #endif
@@ -2674,11 +2665,11 @@ exit:
 #if OPENTHREAD_CONFIG_MLE_LINK_METRICS_INITIATOR_ENABLE
 Error Mle::SendLinkProbe(const Ip6::Address &aDestination, uint8_t aSeriesId, uint8_t *aBuf, uint8_t aLength)
 {
-    Error    error = kErrorNone;
-    Message *message;
-    Tlv      tlv;
+    Error             error = kErrorNone;
+    OwnedPtr<Message> message;
+    Tlv               tlv;
 
-    VerifyOrExit((message = NewMleMessage(kCommandLinkProbe)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandLinkProbe, message));
 
     tlv.SetType(Tlv::kLinkProbe);
     tlv.SetLength(sizeof(aSeriesId) + aLength);
@@ -2687,10 +2678,9 @@ Error Mle::SendLinkProbe(const Ip6::Address &aDestination, uint8_t aSeriesId, ui
     SuccessOrExit(error = message->Append(aSeriesId));
     SuccessOrExit(error = message->AppendBytes(aBuf, aLength));
 
-    SuccessOrExit(error = SendMessage(*message, aDestination));
+    SuccessOrExit(error = SendMessage(message, aDestination));
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 #endif
@@ -2787,7 +2777,7 @@ exit:
     return error;
 }
 
-Error Mle::SendMessage(Message &aMessage, const Ip6::Address &aDestination)
+Error Mle::SendMessage(OwnedPtr<Message> &aMessage, const Ip6::Address &aDestination)
 {
     Error            error  = kErrorNone;
     uint16_t         offset = 0;
@@ -2799,7 +2789,7 @@ Error Mle::SendMessage(Message &aMessage, const Ip6::Address &aDestination)
     messageInfo.SetPeerPort(kUdpPort);
     messageInfo.SetHopLimit(kMleHopLimit);
 
-    IgnoreError(aMessage.Read(offset, securitySuite));
+    IgnoreError(aMessage->Read(offset, securitySuite));
     offset += sizeof(securitySuite);
 
     if (securitySuite == k154Security)
@@ -2808,24 +2798,25 @@ Error Mle::SendMessage(Message &aMessage, const Ip6::Address &aDestination)
 
         // Update the fields in the security header
 
-        IgnoreError(aMessage.Read(offset, header));
+        IgnoreError(aMessage->Read(offset, header));
         header.SetFrameCounter(Get<KeyManager>().GetMleFrameCounter());
         header.SetKeyId(Get<KeyManager>().GetCurrentKeySequence());
-        aMessage.Write(offset, header);
+        aMessage->Write(offset, header);
         offset += sizeof(SecurityHeader);
 
-        SuccessOrExit(error = ProcessMessageSecurity(Crypto::AesCcm::kEncrypt, aMessage, messageInfo, offset, header));
+        SuccessOrExit(error = ProcessMessageSecurity(Crypto::AesCcm::kEncrypt, *aMessage, messageInfo, offset, header));
 
         Get<KeyManager>().IncrementMleFrameCounter();
     }
 
-    SuccessOrExit(error = mSocket.SendTo(aMessage, messageInfo));
+    SuccessOrExit(error = mSocket.SendTo(*aMessage, messageInfo));
+    aMessage.Release();
 
 exit:
     return error;
 }
 
-Error Mle::AddDelayedResponse(Message &aMessage, const Ip6::Address &aDestination, uint16_t aDelay)
+Error Mle::AddDelayedResponse(OwnedPtr<Message> &aMessage, const Ip6::Address &aDestination, uint16_t aDelay)
 {
     Error                   error = kErrorNone;
     DelayedResponseMetadata metadata;
@@ -2833,8 +2824,8 @@ Error Mle::AddDelayedResponse(Message &aMessage, const Ip6::Address &aDestinatio
     metadata.mSendTime    = TimerMilli::GetNow() + aDelay;
     metadata.mDestination = aDestination;
 
-    SuccessOrExit(error = metadata.AppendTo(aMessage));
-    mDelayedResponses.Enqueue(aMessage);
+    SuccessOrExit(error = metadata.AppendTo(*aMessage));
+    mDelayedResponses.Enqueue(*aMessage.Release());
 
     mDelayedResponseTimer.FireAtIfEarlier(metadata.mSendTime);
 
@@ -4676,11 +4667,11 @@ const char *Mle::ReattachStateToString(ReattachState aState)
 #if OPENTHREAD_CONFIG_MLE_LINK_METRICS_INITIATOR_ENABLE
 Error Mle::SendLinkMetricsManagementRequest(const Ip6::Address &aDestination, const uint8_t *aSubTlvs, uint8_t aLength)
 {
-    Error    error = kErrorNone;
-    Message *message;
-    Tlv      tlv;
+    Error             error = kErrorNone;
+    OwnedPtr<Message> message;
+    Tlv               tlv;
 
-    VerifyOrExit((message = NewMleMessage(kCommandLinkMetricsManagementRequest)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = AllocateMleMessage(kCommandLinkMetricsManagementRequest, message));
 
     // Link Metrics Management TLV
     tlv.SetType(Tlv::kLinkMetricsManagement);
@@ -4689,10 +4680,9 @@ Error Mle::SendLinkMetricsManagementRequest(const Ip6::Address &aDestination, co
     SuccessOrExit(error = message->AppendBytes(&tlv, sizeof(tlv)));
     SuccessOrExit(error = message->AppendBytes(aSubTlvs, aLength));
 
-    SuccessOrExit(error = SendMessage(*message, aDestination));
+    SuccessOrExit(error = SendMessage(message, aDestination));
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 #endif

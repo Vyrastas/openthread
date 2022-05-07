@@ -66,8 +66,8 @@ Error DiscoverScanner::Discover(const Mac::ChannelMask &aScanChannels,
                                 Handler                 aCallback,
                                 void *                  aContext)
 {
-    Error                           error   = kErrorNone;
-    Message *                       message = nullptr;
+    Error                           error = kErrorNone;
+    OwnedPtr<Message>               message;
     Tlv                             tlv;
     Ip6::Address                    destination;
     MeshCoP::DiscoveryRequestTlv    discoveryRequest;
@@ -105,7 +105,7 @@ Error DiscoverScanner::Discover(const Mac::ChannelMask &aScanChannels,
         mScanChannels.Intersect(aScanChannels);
     }
 
-    VerifyOrExit((message = Get<Mle>().NewMleMessage(Mle::kCommandDiscoveryRequest)) != nullptr, error = kErrorNoBufs);
+    SuccessOrExit(error = Get<Mle>().AllocateMleMessage(Mle::kCommandDiscoveryRequest, message));
     message->SetPanId(aPanId);
 
     // Prepare sub-TLV MeshCoP Discovery Request.
@@ -136,7 +136,7 @@ Error DiscoverScanner::Discover(const Mac::ChannelMask &aScanChannels,
 
     destination.SetToLinkLocalAllRoutersMulticast();
 
-    SuccessOrExit(error = Get<Mle>().SendMessage(*message, destination));
+    SuccessOrExit(error = Get<Mle>().SendMessage(message, destination));
 
     if ((aPanId == Mac::kPanIdBroadcast) && (Get<Mac::Mac>().GetPanId() == Mac::kPanIdBroadcast))
     {
@@ -156,7 +156,6 @@ Error DiscoverScanner::Discover(const Mac::ChannelMask &aScanChannels,
     Mle::Log(Mle::kMessageSend, Mle::kTypeDiscoveryRequest, destination);
 
 exit:
-    FreeMessageOnError(message, error);
     return error;
 }
 

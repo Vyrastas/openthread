@@ -41,6 +41,7 @@
 #include "common/log.hpp"
 #include "common/non_copyable.hpp"
 #include "common/notifier.hpp"
+#include "common/owned_ptr.hpp"
 #include "common/timer.hpp"
 #include "crypto/aes_ccm.hpp"
 #include "mac/mac.hpp"
@@ -977,12 +978,14 @@ protected:
     /**
      * This method allocates and initializes new MLE message for a given command.
      *
-     * @param[in] aCommand   The MLE command.
+     * @param[in]  aCommand   The MLE command.
+     * @param[out] aMessage   A owned message pointer to return the allocated message.
      *
-     * @returns A pointer to the message or `nullptr` if insufficient message buffers are available.
+     * @retval kErrorNone    New message was allocated and initailzied successfully.
+     * @retval kErrorNoBufs  Failed to allocated buffer.
      *
      */
-    Message *NewMleMessage(Command aCommand);
+    Error AllocateMleMessage(Command aCommand, OwnedPtr<Message> &aMessage);
 
     /**
      * This method sets the device role.
@@ -1440,14 +1443,16 @@ protected:
     /**
      * This method submits an MLE message to the UDP socket.
      *
-     * @param[in]  aMessage      A reference to the message.
+     * On success, the ownership of @p aMessage owner pointer is transferred (@p aMessage pointer becomes `nullptr`).
+     *
+     * @param[in]  aMessage      A reference to message owned pointer.
      * @param[in]  aDestination  A reference to the IPv6 address of the destination.
      *
      * @retval kErrorNone     Successfully submitted the MLE message.
      * @retval kErrorNoBufs   Insufficient buffers to form the rest of the MLE message.
      *
      */
-    Error SendMessage(Message &aMessage, const Ip6::Address &aDestination);
+    Error SendMessage(OwnedPtr<Message> &aMessage, const Ip6::Address &aDestination);
 
     /**
      * This method sets the RLOC16 assigned to the Thread interface.
@@ -1482,7 +1487,9 @@ protected:
     /**
      * This method adds a message to the message queue. The queued message will be transmitted after given delay.
      *
-     * @param[in]  aMessage             The message to transmit after given delay.
+     * On success, the ownership of @p aMessage owner pointer is transferred (@p aMessage pointer becomes `nullptr`).
+     *
+     * @param[in]  aMessage             The owned message pointer to transmit after given delay.
      * @param[in]  aDestination         The IPv6 address of the recipient of the message.
      * @param[in]  aDelay               The delay in milliseconds before transmission of the message.
      *
@@ -1490,7 +1497,7 @@ protected:
      * @retval kErrorNoBufs   Insufficient buffers to queue the message.
      *
      */
-    Error AddDelayedResponse(Message &aMessage, const Ip6::Address &aDestination, uint16_t aDelay);
+    Error AddDelayedResponse(OwnedPtr<Message> &aMessage, const Ip6::Address &aDestination, uint16_t aDelay);
 
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
     /**
