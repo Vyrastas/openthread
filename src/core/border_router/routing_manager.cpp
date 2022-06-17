@@ -70,6 +70,7 @@ RoutingManager::RoutingManager(Instance &aInstance)
     , mTimeRouterAdvMessageLastUpdate(TimerMilli::GetNow())
     , mLearntRouterAdvMessageFromHost(false)
     , mDiscoveredPrefixInvalidTimer(aInstance, HandleDiscoveredPrefixInvalidTimer)
+    , mStaleTimerRescheduleTask(aInstance, HandleStaleTimerRescheduleTask)
     , mDiscoveredPrefixStaleTimer(aInstance, HandleDiscoveredPrefixStaleTimer)
     , mRouterAdvertisementCount(0)
     , mLastRouterAdvertisementSendTime(TimerMilli::GetNow() - kMinDelayBetweenRtrAdvs)
@@ -605,6 +606,7 @@ void RoutingManager::EvaluateOnLinkPrefix(void)
                     // To remove the prefix from the list, we copy the
                     // popped last entry into `prefix` entry.
                     prefix = *mDiscoveredPrefixes.PopBack();
+                    ResetDiscoveredPrefixStaleTimer();
                     break;
                 }
             }
@@ -1282,6 +1284,8 @@ void RoutingManager::InvalidateDiscoveredPrefixes(void)
         mDiscoveredPrefixInvalidTimer.FireAt(nextExpireTime);
     }
 
+    ResetDiscoveredPrefixStaleTimer();
+
     if (!containsOnLinkPrefix && !mIsAdvertisingLocalOnLinkPrefix)
     {
         // There are no valid on-link prefixes on infra link now, start
@@ -1355,12 +1359,23 @@ bool RoutingManager::UpdateRouterAdvertHeader(const Ip6::Nd::RouterAdvertMessage
 
 void RoutingManager::ResetDiscoveredPrefixStaleTimer(void)
 {
+    mDiscoveredPrefixStaleTimer.Stop();
+    mStaleTimerRescheduleTask.Post();
+}
+
+void RoutingManager::HandleStaleTimerRescheduleTask(Tasklet &aTasklet)
+{
+    aTasklet.Get<RoutingManager>().HandleStaleTimerRescheduleTask();
+}
+
+void RoutingManager::HandleStaleTimerRescheduleTask(void)
+{
     TimeMilli now                           = TimerMilli::GetNow();
     TimeMilli nextStaleTime                 = now.GetDistantFuture();
     TimeMilli maxOnlinkPrefixStaleTime      = now;
     bool      requireCheckStaleOnlinkPrefix = false;
 
-    OT_ASSERT(mIsRunning);
+    VerifyOrExit(mIsRunning);
 
     // The stale timer triggers sending RS to check the state of On-Link/OMR prefixes and host RA messages.
     // The rules for calculating the next stale time:
@@ -1402,19 +1417,14 @@ void RoutingManager::ResetDiscoveredPrefixStaleTimer(void)
         nextStaleTime = OT_MIN(nextStaleTime, maxOnlinkPrefixStaleTime);
     }
 
-    if (nextStaleTime == now.GetDistantFuture())
-    {
-        if (mDiscoveredPrefixStaleTimer.IsRunning())
-        {
-            LogDebg("Prefix stale timer stopped");
-        }
-        mDiscoveredPrefixStaleTimer.Stop();
-    }
-    else
+    if (nextStaleTime != now.GetDistantFuture())
     {
         mDiscoveredPrefixStaleTimer.FireAt(nextStaleTime);
         LogDebg("Prefix stale timer scheduled in %lu ms", nextStaleTime - now);
     }
+
+exit:
+    return;
 }
 
 //---------------------------------------------------------------------------------------------------------------------

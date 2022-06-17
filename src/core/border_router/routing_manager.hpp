@@ -55,6 +55,7 @@
 #include "common/locator.hpp"
 #include "common/notifier.hpp"
 #include "common/string.hpp"
+#include "common/tasklet.hpp"
 #include "common/timer.hpp"
 #include "net/ip6.hpp"
 #include "net/nd6.hpp"
@@ -337,6 +338,8 @@ private:
     void        HandleRouterSolicitTimer(void);
     static void HandleDiscoveredPrefixInvalidTimer(Timer &aTimer);
     void        HandleDiscoveredPrefixInvalidTimer(void);
+    static void HandleStaleTimerRescheduleTask(Tasklet &aTasklet);
+    void        HandleStaleTimerRescheduleTask(void);
     static void HandleDiscoveredPrefixStaleTimer(Timer &aTimer);
     void        HandleDiscoveredPrefixStaleTimer(void);
     static void HandleRoutingPolicyTimer(Timer &aTimer);
@@ -413,6 +416,8 @@ private:
     bool                                 mLearntRouterAdvMessageFromHost;
 
     TimerMilli mDiscoveredPrefixInvalidTimer;
+
+    Tasklet    mStaleTimerRescheduleTask;
     TimerMilli mDiscoveredPrefixStaleTimer;
 
     uint32_t  mRouterAdvertisementCount;
