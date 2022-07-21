@@ -252,6 +252,7 @@ void TestAppender(void)
     uint8_t                 zeroBuffer[kMaxBufferSize];
     Appender                bufAppender(buffer, sizeof(buffer));
     Data<kWithUint16Length> data;
+    uint16_t                offset;
 
     printf("TestAppender\n");
 
@@ -260,6 +261,9 @@ void TestAppender(void)
 
     message = instance->Get<MessagePool>().Allocate(Message::kTypeIp6);
     VerifyOrQuit(message != nullptr);
+
+    SuccessOrQuit(message->Append(kData1));
+    SuccessOrQuit(message->Append(kData2));
 
     memset(buffer, 0, sizeof(buffer));
     memset(zeroBuffer, 0, sizeof(zeroBuffer));
@@ -276,7 +280,7 @@ void TestAppender(void)
     VerifyOrQuit(memcmp(buffer, kData1, sizeof(kData1)) == 0);
     VerifyOrQuit(memcmp(buffer + sizeof(kData1), zeroBuffer, sizeof(buffer) - sizeof(kData1)) == 0);
 
-    SuccessOrQuit(bufAppender.AppendBytes(kData2, sizeof(kData2)));
+    SuccessOrQuit(bufAppender.AppendBytesFromMessage(*message, sizeof(kData1), sizeof(kData2)));
     DumpBuffer("Data1+Data2", buffer, sizeof(buffer));
     VerifyOrQuit(bufAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2));
     VerifyOrQuit(bufAppender.GetBufferStart() == buffer);
@@ -295,6 +299,30 @@ void TestAppender(void)
     VerifyOrQuit(memcmp(buffer + sizeof(kData1), kData2, sizeof(kData2)) == 0);
     VerifyOrQuit(memcmp(buffer + sizeof(kData1) + sizeof(kData2), kData1, sizeof(kData1)) == 0);
 
+    offset = sizeof(kData1);
+    bufAppender.WriteBytes(offset, kData1, sizeof(kData1));
+    VerifyOrQuit(bufAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2) + sizeof(kData1));
+    VerifyOrQuit(bufAppender.GetBufferStart() == buffer);
+    VerifyOrQuit(memcmp(buffer, kData1, sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1), kData1, sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1) * 2, kData2 + sizeof(kData1), sizeof(kData2) - sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1) + sizeof(kData2), kData1, sizeof(kData1)) == 0);
+
+    bufAppender.WriteBytes(offset, kData2, sizeof(kData2));
+    VerifyOrQuit(bufAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2) + sizeof(kData1));
+    VerifyOrQuit(bufAppender.GetBufferStart() == buffer);
+    VerifyOrQuit(memcmp(buffer, kData1, sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1), kData2, sizeof(kData2)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1) + sizeof(kData2), kData1, sizeof(kData1)) == 0);
+
+    offset = bufAppender.GetAppendedLength() - sizeof(kData2);
+    bufAppender.WriteBytes(offset, kData2, sizeof(kData2));
+    VerifyOrQuit(bufAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2) + sizeof(kData1));
+    VerifyOrQuit(bufAppender.GetBufferStart() == buffer);
+    VerifyOrQuit(memcmp(buffer, kData1, sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1), kData2, sizeof(kData1)) == 0);
+    VerifyOrQuit(memcmp(buffer + sizeof(kData1) * 2, kData2, sizeof(kData2)) == 0);
+
     VerifyOrQuit(bufAppender.Append<uint8_t>(0) == kErrorNoBufs);
 
     bufAppender.GetAsData(data);
@@ -303,12 +331,13 @@ void TestAppender(void)
 
     // Test Message Appender
 
+    SuccessOrQuit(message->SetLength(0));
     SuccessOrQuit(message->Append(kData2));
     VerifyOrQuit(message->Compare(0, kData2));
 
     {
         Appender msgAppender(*message);
-        uint16_t offset = message->GetLength();
+        uint16_t startOffset = message->GetLength();
 
         VerifyOrQuit(msgAppender.GetType() == Appender::kMessage);
 
@@ -316,12 +345,20 @@ void TestAppender(void)
         VerifyOrQuit(msgAppender.GetAppendedLength() == sizeof(kData1));
 
         VerifyOrQuit(message->GetLength() == sizeof(kData2) + sizeof(kData1));
-        VerifyOrQuit(message->Compare(offset, kData1));
+        VerifyOrQuit(message->Compare(startOffset, kData1));
 
-        SuccessOrQuit(msgAppender.AppendBytes(kData2, sizeof(kData2)));
+        SuccessOrQuit(msgAppender.AppendBytesFromMessage(*message, 0, sizeof(kData2)));
         VerifyOrQuit(msgAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2));
-        VerifyOrQuit(message->Compare(offset, kData1));
-        VerifyOrQuit(message->Compare(offset + sizeof(kData1), kData2));
+        VerifyOrQuit(message->Compare(startOffset, kData1));
+        VerifyOrQuit(message->Compare(startOffset + sizeof(kData1), kData2));
+
+        offset = sizeof(kData1);
+        msgAppender.WriteBytes(offset, kData1, sizeof(kData1));
+        VerifyOrQuit(msgAppender.GetAppendedLength() == sizeof(kData1) + sizeof(kData2));
+        VerifyOrQuit(message->Compare(startOffset, kData1));
+        VerifyOrQuit(message->Compare(startOffset + sizeof(kData1), kData1));
+        VerifyOrQuit(message->CompareBytes(startOffset + sizeof(kData1) * 2, kData2 + sizeof(kData1),
+                                           sizeof(kData2) - sizeof(kData1)));
     }
 
     message->Free();

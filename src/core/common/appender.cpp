@@ -72,6 +72,42 @@ exit:
     return error;
 }
 
+Error Appender::AppendBytesFromMessage(const Message &aMessage, uint16_t aOffset, uint16_t aLength)
+{
+    Error error = kErrorNone;
+
+    switch (mType)
+    {
+    case kMessage:
+        error = mShared.mMessage.mMessage->AppendBytesFromMessage(aMessage, aOffset, aLength);
+        break;
+
+    case kBuffer:
+        VerifyOrExit(aLength <= static_cast<uint16_t>(mShared.mBuffer.mEnd - mShared.mBuffer.mCur),
+                     error = kErrorNoBufs);
+        SuccessOrExit(error = aMessage.Read(aOffset, mShared.mBuffer.mCur, aLength));
+        mShared.mBuffer.mCur += aLength;
+        break;
+    }
+
+exit:
+    return error;
+}
+
+void Appender::WriteBytes(uint16_t aOffset, const void *aBuffer, uint16_t aLength)
+{
+    switch (mType)
+    {
+    case kMessage:
+        mShared.mMessage.mMessage->WriteBytes(mShared.mMessage.mStartOffset + aOffset, aBuffer, aLength);
+        break;
+
+    case kBuffer:
+        memcpy(mShared.mBuffer.mStart + aOffset, aBuffer, aLength);
+        break;
+    }
+}
+
 uint16_t Appender::GetAppendedLength(void) const
 {
     uint16_t length = 0;

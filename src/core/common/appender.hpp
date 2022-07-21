@@ -93,7 +93,7 @@ public:
     Type GetType(void) const { return mType; }
 
     /**
-     * This method appends bytes to the `Appender` object
+     * This method appends bytes to the `Appender` object.
      *
      * @param[in] aBuffer  A pointer to a data buffer (MUST NOT be `nullptr`) to append.
      * @param[in] aLength  The number of bytes to append.
@@ -103,6 +103,20 @@ public:
      *
      */
     Error AppendBytes(const void *aBuffer, uint16_t aLength);
+
+    /**
+     * This method appends bytes read from a given message to the `Appender` object.
+     *
+     * @param[in] aMessage   The message to read from (it can be the same as the message associated with `Appender`).
+     * @param[in] aOffset    The offset in @p aMessage to start reading the bytes from.
+     * @param[in] aLength    The number of bytes to read from @p aMessage and append.
+     *
+     * @retval kErrorNone    Successfully appended the bytes.
+     * @retval kErrorNoBufs  Insufficient available buffers to grow the message.
+     * @retval kErrorParse   Not enough bytes in @p aMessage to read @p aLength bytes from @p aOffset.
+     *
+     */
+    Error AppendBytesFromMessage(const Message &aMessage, uint16_t aOffset, uint16_t aLength);
 
     /**
      * This method appends an object to the end of the `Appender` object.
@@ -120,6 +134,46 @@ public:
         static_assert(!TypeTraits::IsPointer<ObjectType>::kValue, "ObjectType must not be a pointer");
 
         return AppendBytes(&aObject, sizeof(ObjectType));
+    }
+
+    /**
+     * This method writes bytes to the `Appender` at a given offset overwriting previously appended content.
+     *
+     * This method does not perform any bound checks. The caller MUST ensure the given data length fits within the
+     * previously appended content. Otherwise the behavior of this method is undefined.
+     *
+     * In `Appender` is using a buffer, then offset is defined relative to start of the buffer. If the `Appender` is
+     * using a `Message`, then offset is defined relative to end of `Message` at the point it was used to initialize
+     * the `Appender` instance.  For example, if `Message` starts with 10 bytes, and then we create an instance
+     * `Appender(Message)`, then offset 5 in `Appender` would map to (10+5) 15th byte in the message.
+     *
+     *
+     * @param[in] aOffset    The offset to begin writing.
+     * @param[in] aBuffer    A pointer to a data buffer to write.
+     * @param[in] aLength    Number of bytes in @p aBuffer.
+     *
+     */
+    void WriteBytes(uint16_t aOffset, const void *aBuffer, uint16_t aLength);
+
+    /**
+     * This methods writes an object to the `Appender` at a given offset overwriting previously appended content.
+     *
+     * This method does not perform any bound checks. The caller MUST ensure the given data length fits within the
+     * previously appended content. Otherwise the behavior of this method is undefined.
+     *
+     * @p aOffset is defined similar to `WriteBytes()`.
+     *
+     * @tparam     ObjectType   The object type to write to the message.
+     *
+     * @param[in]  aOffset      The offset to begin writing.
+     * @param[in]  aObject      A reference to the object to write.
+     *
+     */
+    template <typename ObjectType> void Write(uint16_t aOffset, const ObjectType &aObject)
+    {
+        static_assert(!TypeTraits::IsPointer<ObjectType>::kValue, "ObjectType must not be a pointer");
+
+        WriteBytes(aOffset, &aObject, sizeof(ObjectType));
     }
 
     /**
