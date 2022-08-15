@@ -28,10 +28,12 @@
 
 /**
  * @file
- *   This file includes definitions for maintaining Thread network topologies.
+ *   This file includes definitions a `Child` node.
  */
 
-#include "topology.hpp"
+#include "child.hpp"
+
+#if OPENTHREAD_FTD
 
 #include "common/array.hpp"
 #include "common/code_utils.hpp"
@@ -40,202 +42,6 @@
 #include "common/locator_getters.hpp"
 
 namespace ot {
-
-bool Neighbor::AddressMatcher::Matches(const Neighbor &aNeighbor) const
-{
-    bool matches = false;
-
-    VerifyOrExit(aNeighbor.MatchesFilter(mStateFilter));
-
-    if (mShortAddress != Mac::kShortAddrInvalid)
-    {
-        VerifyOrExit(mShortAddress == aNeighbor.GetRloc16());
-    }
-
-    if (mExtAddress != nullptr)
-    {
-        VerifyOrExit(*mExtAddress == aNeighbor.GetExtAddress());
-    }
-
-    matches = true;
-
-exit:
-    return matches;
-}
-
-void Neighbor::Info::SetFrom(const Neighbor &aNeighbor)
-{
-    Clear();
-
-    mExtAddress       = aNeighbor.GetExtAddress();
-    mAge              = Time::MsecToSec(TimerMilli::GetNow() - aNeighbor.GetLastHeard());
-    mRloc16           = aNeighbor.GetRloc16();
-    mLinkFrameCounter = aNeighbor.GetLinkFrameCounters().GetMaximum();
-    mMleFrameCounter  = aNeighbor.GetMleFrameCounter();
-    mLinkQualityIn    = aNeighbor.GetLinkInfo().GetLinkQuality();
-    mAverageRssi      = aNeighbor.GetLinkInfo().GetAverageRss();
-    mLastRssi         = aNeighbor.GetLinkInfo().GetLastRss();
-    mFrameErrorRate   = aNeighbor.GetLinkInfo().GetFrameErrorRate();
-    mMessageErrorRate = aNeighbor.GetLinkInfo().GetMessageErrorRate();
-    mRxOnWhenIdle     = aNeighbor.IsRxOnWhenIdle();
-    mFullThreadDevice = aNeighbor.IsFullThreadDevice();
-    mFullNetworkData  = (aNeighbor.GetNetworkDataType() == NetworkData::kFullSet);
-}
-
-void Neighbor::Init(Instance &aInstance)
-{
-    InstanceLocatorInit::Init(aInstance);
-    mLinkInfo.Init(aInstance);
-    SetState(kStateInvalid);
-}
-
-bool Neighbor::IsStateValidOrAttaching(void) const
-{
-    bool rval = false;
-
-    switch (GetState())
-    {
-    case kStateInvalid:
-    case kStateParentRequest:
-    case kStateParentResponse:
-        break;
-
-    case kStateRestored:
-    case kStateChildIdRequest:
-    case kStateLinkRequest:
-    case kStateChildUpdateRequest:
-    case kStateValid:
-        rval = true;
-        break;
-    }
-
-    return rval;
-}
-
-bool Neighbor::MatchesFilter(StateFilter aFilter) const
-{
-    bool matches = false;
-
-    switch (aFilter)
-    {
-    case kInStateValid:
-        matches = IsStateValid();
-        break;
-
-    case kInStateValidOrRestoring:
-        matches = IsStateValidOrRestoring();
-        break;
-
-    case kInStateChildIdRequest:
-        matches = IsStateChildIdRequest();
-        break;
-
-    case kInStateValidOrAttaching:
-        matches = IsStateValidOrAttaching();
-        break;
-
-    case kInStateInvalid:
-        matches = IsStateInvalid();
-        break;
-
-    case kInStateAnyExceptInvalid:
-        matches = !IsStateInvalid();
-        break;
-
-    case kInStateAnyExceptValidOrRestoring:
-        matches = !IsStateValidOrRestoring();
-        break;
-
-    case kInStateAny:
-        matches = true;
-        break;
-    }
-
-    return matches;
-}
-
-#if OPENTHREAD_CONFIG_MULTI_RADIO
-void Neighbor::SetLastRxFragmentTag(uint16_t aTag)
-{
-    mLastRxFragmentTag     = (aTag == 0) ? 0xffff : aTag;
-    mLastRxFragmentTagTime = TimerMilli::GetNow();
-}
-
-bool Neighbor::IsLastRxFragmentTagSet(void) const
-{
-    return (mLastRxFragmentTag != 0) && (TimerMilli::GetNow() <= mLastRxFragmentTagTime + kLastRxFragmentTagTimeout);
-}
-#endif
-
-void Neighbor::GenerateChallenge(void)
-{
-    IgnoreError(
-        Random::Crypto::FillBuffer(mValidPending.mPending.mChallenge, sizeof(mValidPending.mPending.mChallenge)));
-}
-
-#if OPENTHREAD_CONFIG_MLE_LINK_METRICS_INITIATOR_ENABLE || OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE
-void Neighbor::AggregateLinkMetrics(uint8_t aSeriesId, uint8_t aFrameType, uint8_t aLqi, int8_t aRss)
-{
-    for (LinkMetrics::SeriesInfo &entry : mLinkMetricsSeriesInfoList)
-    {
-        if (aSeriesId == 0 || aSeriesId == entry.GetSeriesId())
-        {
-            entry.AggregateLinkMetrics(aFrameType, aLqi, aRss);
-        }
-    }
-}
-
-LinkMetrics::SeriesInfo *Neighbor::GetForwardTrackingSeriesInfo(const uint8_t &aSeriesId)
-{
-    return mLinkMetricsSeriesInfoList.FindMatching(aSeriesId);
-}
-
-void Neighbor::AddForwardTrackingSeriesInfo(LinkMetrics::SeriesInfo &aSeriesInfo)
-{
-    mLinkMetricsSeriesInfoList.Push(aSeriesInfo);
-}
-
-LinkMetrics::SeriesInfo *Neighbor::RemoveForwardTrackingSeriesInfo(const uint8_t &aSeriesId)
-{
-    return mLinkMetricsSeriesInfoList.RemoveMatching(aSeriesId);
-}
-
-void Neighbor::RemoveAllForwardTrackingSeriesInfo(void)
-{
-    while (!mLinkMetricsSeriesInfoList.IsEmpty())
-    {
-        LinkMetrics::SeriesInfo *seriesInfo = mLinkMetricsSeriesInfoList.Pop();
-        Get<LinkMetrics::LinkMetrics>().mSeriesInfoPool.Free(*seriesInfo);
-    }
-}
-#endif // OPENTHREAD_CONFIG_MLE_LINK_METRICS_INITIATOR_ENABLE || OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE
-
-const char *Neighbor::StateToString(State aState)
-{
-    static const char *const kStateStrings[] = {
-        "Invalid",        // (0) kStateInvalid
-        "Restored",       // (1) kStateRestored
-        "ParentReq",      // (2) kStateParentRequest
-        "ParentRes",      // (3) kStateParentResponse
-        "ChildIdReq",     // (4) kStateChildIdRequest
-        "LinkReq",        // (5) kStateLinkRequest
-        "ChildUpdateReq", // (6) kStateChildUpdateRequest
-        "Valid",          // (7) kStateValid
-    };
-
-    static_assert(0 == kStateInvalid, "kStateInvalid value is incorrect");
-    static_assert(1 == kStateRestored, "kStateRestored value is incorrect");
-    static_assert(2 == kStateParentRequest, "kStateParentRequest value is incorrect");
-    static_assert(3 == kStateParentResponse, "kStateParentResponse value is incorrect");
-    static_assert(4 == kStateChildIdRequest, "kStateChildIdRequest value is incorrect");
-    static_assert(5 == kStateLinkRequest, "kStateLinkRequest value is incorrect");
-    static_assert(6 == kStateChildUpdateRequest, "kStateChildUpdateRequest value is incorrect");
-    static_assert(7 == kStateValid, "kStateValid value is incorrect");
-
-    return kStateStrings[aState];
-}
-
-#if OPENTHREAD_FTD
 
 void Child::Info::SetFrom(const Child &aChild)
 {
@@ -509,34 +315,6 @@ void Child::SetAddressMlrState(const Ip6::Address &aAddress, MlrState aState)
 }
 #endif // OPENTHREAD_CONFIG_TMF_PROXY_MLR_ENABLE
 
-#endif // OPENTHREAD_FTD
-
-void Router::Info::SetFrom(const Router &aRouter)
-{
-    Clear();
-    mRloc16          = aRouter.GetRloc16();
-    mRouterId        = Mle::Mle::RouterIdFromRloc16(mRloc16);
-    mExtAddress      = aRouter.GetExtAddress();
-    mAllocated       = true;
-    mNextHop         = aRouter.GetNextHop();
-    mLinkEstablished = aRouter.IsStateValid();
-    mPathCost        = aRouter.GetCost();
-    mLinkQualityIn   = aRouter.GetLinkInfo().GetLinkQuality();
-    mLinkQualityOut  = aRouter.GetLinkQualityOut();
-    mAge             = static_cast<uint8_t>(Time::MsecToSec(TimerMilli::GetNow() - aRouter.GetLastHeard()));
-    mVersion         = aRouter.GetVersion();
-#if OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE
-    mCslClockAccuracy = aRouter.GetCslClockAccuracy();
-    mCslUncertainty   = aRouter.GetCslUncertainty();
-#endif
-}
-
-void Router::Clear(void)
-{
-    Instance &instance = GetInstance();
-
-    memset(reinterpret_cast<void *>(this), 0, sizeof(Router));
-    Init(instance);
-}
-
 } // namespace ot
+
+#endif // OPENTHREAD_FTD

@@ -46,7 +46,7 @@
 #include "common/time_ticker.hpp"
 #include "common/timer.hpp"
 #include "mac/mac_types.hpp"
-#include "thread/topology.hpp"
+#include "thread/child.hpp"
 
 namespace ot {
 

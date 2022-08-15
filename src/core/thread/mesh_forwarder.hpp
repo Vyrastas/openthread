@@ -50,10 +50,11 @@
 #include "mac/mac_frame.hpp"
 #include "net/ip6.hpp"
 #include "thread/address_resolver.hpp"
+#include "thread/child.hpp"
 #include "thread/indirect_sender.hpp"
 #include "thread/lowpan.hpp"
 #include "thread/network_data_leader.hpp"
-#include "thread/topology.hpp"
+#include "thread/router.hpp"
 
 namespace ot {
 

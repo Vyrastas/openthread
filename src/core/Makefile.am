@@ -281,6 +281,7 @@ SOURCES_COMMON                                  = \
     thread/announce_begin_server.cpp              \
     thread/announce_sender.cpp                    \
     thread/anycast_locator.cpp                    \
+    thread/child.cpp                              \
     thread/child_table.cpp                        \
     thread/csl_tx_scheduler.cpp                   \
     thread/discover_scanner.cpp                   \
@@ -298,6 +299,7 @@ SOURCES_COMMON                                  = \
     thread/mle_router.cpp                         \
     thread/mle_types.cpp                          \
     thread/mlr_manager.cpp                        \
+    thread/neighbor.cpp                           \
     thread/neighbor_table.cpp                     \
     thread/network_data.cpp                       \
     thread/network_data_leader.cpp                \
@@ -311,12 +313,12 @@ SOURCES_COMMON                                  = \
     thread/network_diagnostic.cpp                 \
     thread/panid_query_server.cpp                 \
     thread/radio_selector.cpp                     \
+    thread/router.cpp                             \
     thread/router_table.cpp                       \
     thread/src_match_controller.cpp               \
     thread/thread_netif.cpp                       \
     thread/time_sync_service.cpp                  \
     thread/tmf.cpp                                \
-    thread/topology.cpp                           \
     thread/uri_paths.cpp                          \
     utils/channel_manager.cpp                     \
     utils/channel_monitor.cpp                     \
@@ -591,6 +593,7 @@ HEADERS_COMMON                                  = \
     thread/announce_begin_server.hpp              \
     thread/announce_sender.hpp                    \
     thread/anycast_locator.hpp                    \
+    thread/child.hpp                              \
     thread/child_mask.hpp                         \
     thread/child_table.hpp                        \
     thread/csl_tx_scheduler.hpp                   \
@@ -611,6 +614,7 @@ HEADERS_COMMON                                  = \
     thread/mle_types.hpp                          \
     thread/mlr_manager.hpp                        \
     thread/mlr_types.hpp                          \
+    thread/neighbor.hpp                           \
     thread/neighbor_table.hpp                     \
     thread/network_data.hpp                       \
     thread/network_data_leader.hpp                \
@@ -625,13 +629,13 @@ HEADERS_COMMON                                  = \
     thread/network_diagnostic_tlvs.hpp            \
     thread/panid_query_server.hpp                 \
     thread/radio_selector.hpp                     \
+    thread/router.hpp                             \
     thread/router_table.hpp                       \
     thread/src_match_controller.hpp               \
     thread/thread_netif.hpp                       \
     thread/thread_tlvs.hpp                        \
     thread/time_sync_service.hpp                  \
     thread/tmf.hpp                                \
-    thread/topology.hpp                           \
     thread/uri_paths.hpp                          \
     utils/channel_manager.hpp                     \
     utils/channel_monitor.hpp                     \

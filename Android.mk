@@ -325,6 +325,7 @@ LOCAL_SRC_FILES                                                  := \
     src/core/thread/announce_begin_server.cpp                       \
     src/core/thread/announce_sender.cpp                             \
     src/core/thread/anycast_locator.cpp                             \
+    src/core/thread/child.cpp                                       \
     src/core/thread/child_table.cpp                                 \
     src/core/thread/csl_tx_scheduler.cpp                            \
     src/core/thread/discover_scanner.cpp                            \
@@ -342,6 +343,7 @@ LOCAL_SRC_FILES                                                  := \
     src/core/thread/mle_router.cpp                                  \
     src/core/thread/mle_types.cpp                                   \
     src/core/thread/mlr_manager.cpp                                 \
+    src/core/thread/neighbor.cpp                                    \
     src/core/thread/neighbor_table.cpp                              \
     src/core/thread/network_data.cpp                                \
     src/core/thread/network_data_leader.cpp                         \
@@ -355,12 +357,12 @@ LOCAL_SRC_FILES                                                  := \
     src/core/thread/network_diagnostic.cpp                          \
     src/core/thread/panid_query_server.cpp                          \
     src/core/thread/radio_selector.cpp                              \
+    src/core/thread/router.cpp                                      \
     src/core/thread/router_table.cpp                                \
     src/core/thread/src_match_controller.cpp                        \
     src/core/thread/thread_netif.cpp                                \
     src/core/thread/time_sync_service.cpp                           \
     src/core/thread/tmf.cpp                                         \
-    src/core/thread/topology.cpp                                    \
     src/core/thread/uri_paths.cpp                                   \
     src/core/utils/channel_manager.cpp                              \
     src/core/utils/channel_monitor.cpp                              \
