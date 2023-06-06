@@ -106,11 +106,14 @@ private:
         IaStatus                   mStatus;
     };
 
+    struct OffsetRange
+    {
+        uint16_t mStartOffset;
+        uint16_t mEndOffset;
+    };
+
     void Start(void);
     void Stop(void);
-
-    static bool MatchNetifAddressWithPrefix(const Ip6::Netif::UnicastAddress &aNetifAddress,
-                                            const Ip6::Prefix                &aIp6Prefix);
 
     void Solicit(uint16_t aRloc16);
 
@@ -129,13 +132,14 @@ private:
     static void HandleUdpReceive(void *aContext, otMessage *aMessage, const otMessageInfo *aMessageInfo);
     void        HandleUdpReceive(Message &aMessage, const Ip6::MessageInfo &aMessageInfo);
 
-    void     ProcessReply(Message &aMessage);
-    uint16_t FindOption(Message &aMessage, uint16_t aOffset, uint16_t aLength, Code aCode);
-    Error    ProcessServerIdentifier(Message &aMessage, uint16_t aOffset);
-    Error    ProcessClientIdentifier(Message &aMessage, uint16_t aOffset);
-    Error    ProcessIaNa(Message &aMessage, uint16_t aOffset);
-    Error    ProcessStatusCode(Message &aMessage, uint16_t aOffset);
-    Error    ProcessIaAddress(Message &aMessage, uint16_t aOffset);
+    void  ProcessReply(const Message &aMessage);
+    Error FindOption(const Message &aMessage, Code aCode, OffsetRange &aOptionRange);
+    Error FindOption(const Message &aMessage, const OffsetRange &aOffsetRange, Code aCode, OffsetRange &aOptionRange);
+    Error ProcessServerIdentifierOption(const Message &aMessage);
+    Error ProcessClientIdentifierOption(const Message &aMessage);
+    Error ProcessIaNaOption(const Message &aMessage);
+    Error ProcessStatusCode(const Message &aMessage, const OffsetRange &aOptionRange);
+    Error ProcessIaAddress(const Message &aMessage, const OffsetRange &aOptionRange);
 
     static void HandleTrickleTimer(TrickleTimer &aTrickleTimer);
     void        HandleTrickleTimer(void);

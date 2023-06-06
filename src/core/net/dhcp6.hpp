@@ -132,7 +132,7 @@ public:
      * @returns The DHCPv6 message type.
      *
      */
-    Type GetType(void) const { return mType; }
+    Type GetType(void) const { return static_cast<Type>(mType); }
 
     /**
      * Sets the DHCPv6 message type.
@@ -159,7 +159,7 @@ public:
     void SetTransactionId(const TransactionId &aTransactionId) { mTransactionId = aTransactionId; }
 
 private:
-    Type          mType;
+    uint8_t       mType;
     TransactionId mTransactionId;
 } OT_TOOL_PACKED_END;
 
@@ -242,6 +242,14 @@ public:
      *
      */
     void SetLength(uint16_t aLength) { mLength = HostSwap16(aLength); }
+
+    /**
+     * Returns the size (number of bytes) of option.
+     *
+     * @return The size of DHCP6 option.
+     *
+     */
+    uint32_t GetSize(void) const { return static_cast<uint32_t>(GetLength()) + sizeof(Option); }
 
 private:
     uint16_t mCode;
