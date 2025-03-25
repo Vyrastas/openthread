@@ -759,6 +759,7 @@ exit:
  * Routes:
  * Services:
  * Done
+ * @endcode
  * @cparam netdata show [@ca{-x}|@ca{rloc16}]
  * *   The optional `-x` argument gets Network Data as hex-encoded TLVs.
  * *   The optional `rloc16` argument gets all prefix/route/service entries associated with a given RLOC16.
