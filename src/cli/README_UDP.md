@@ -38,17 +38,21 @@ On node 1, you should see a print out similar to below:
 
 ## Command List
 
+Usage : `udp [command] ...`
+
 - [help](#help)
-- [bind](#bind-netif-ip-port)
+- [bind](#bind)
 - [close](#close)
-- [connect](#connect-ip-port)
+- [connect](#connect)
 - [linksecurity](#linksecurity)
 - [open](#open)
-- [send](#send-ip-port-message)
+- [send](#send)
 
 ## Command Details
 
 ### help
+
+Usage: `udp help`
 
 List the UDP CLI commands.
 
@@ -63,7 +67,9 @@ send
 Done
 ```
 
-### bind [netif] \<ip\> \<port\>
+### bind
+
+Usage: `udp bind [netif] <ip> <port>`
 
 Assigns a name (i.e. IPv6 address and port) to the example socket.
 
@@ -92,6 +98,8 @@ Done
 
 ### close
 
+Usage: `udp close`
+
 Closes the example socket.
 
 ```bash
@@ -99,7 +107,9 @@ Closes the example socket.
 Done
 ```
 
-### connect \<ip\> \<port\>
+### connect
+
+Usage: `udp connect <ip> <port>`
 
 Specifies the peer with which the socket is to be associated.
 
@@ -123,6 +133,8 @@ Done
 
 ### linksecurity
 
+Usage: `udp linksecurity`
+
 Indicates whether the link security is enabled or disabled.
 
 ```bash
@@ -131,7 +143,7 @@ Enabled
 Done
 ```
 
-### linksecurity enable
+Usage: `udp linksecurity enable`
 
 Enable link security.
 
@@ -140,7 +152,7 @@ Enable link security.
 Done
 ```
 
-### linksecurity disable
+Usage: `udp linksecurity disable`
 
 Disable link security.
 
@@ -151,6 +163,8 @@ Done
 
 ### open
 
+Usage: `udp open`
+
 Opens the example socket.
 
 ```bash
@@ -158,7 +172,9 @@ Opens the example socket.
 Done
 ```
 
-### send \<ip\> \<port\> \<message\>
+### send
+
+Usage: `udp send <ip> <port> <message>`
 
 Send a UDP message.
 
@@ -181,7 +197,7 @@ Sending to synthesized IPv6 address: fdde:ad00:beef:2:0:0:ac11:1
 Done
 ```
 
-### send \<ip\> \<port\> \<type\> \<value\>
+Usage: `udp send <ip> <port> <type> <value>`
 
 Send a few bytes over UDP.
 
@@ -204,7 +220,7 @@ Done
 
 ```
 
-### send \<message\>
+Usage: `udp send <message>`
 
 Send a UDP message on a connected socket.
 
@@ -215,7 +231,7 @@ Send a UDP message on a connected socket.
 Done
 ```
 
-### send \<type\> \<value\>
+Usage: `udp send <type> <value>`
 
 Send a few bytes over UDP.
 

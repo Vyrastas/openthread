@@ -6,14 +6,18 @@ See [README_SRP.md](README_SRP.md).
 
 ## Command List
 
+Usage : `srp server [command] ...`
+
 - [help](#help)
 - [addrmode](#addrmode)
 - [auto](#auto)
 - [disable](#disable)
 - [domain](#domain)
 - [enable](#enable)
+- [faststart](#faststart)
 - [host](#host)
 - [lease](#lease)
+- [port](#port)
 - [seqnum](#seqnum)
 - [service](#service)
 - [state](#state)
@@ -46,6 +50,8 @@ Done
 
 ### addrmode
 
+Usage: `srp server addrmode`
+
 Usage: `srp server addrmode [unicast|anycast]`
 
 Get or set the address mode used by the SRP server.
@@ -73,7 +79,11 @@ Done
 
 ### auto
 
-Usage: `srp server auto [enable|disable]`
+Usage: `srp server auto`
+
+Usage: `srp server auto enable`
+
+Usage: `srp server auto disable`
 
 Enables or disables the auto-enable mode on the SRP server.
 
@@ -103,7 +113,9 @@ Done
 
 ### domain
 
-Usage: `srp server domain [domain-name]`
+Usage: `srp server domain`
+
+Usage: `srp server domain <domain-name>`
 
 Get the domain.
 
@@ -133,7 +145,9 @@ Done
 
 ### faststart
 
-Usage: `srp server faststart [enable]`
+Usage: `srp server faststart`
+
+Usage: `srp server faststart enable`
 
 This command requires that `OPENTHREAD_CONFIG_SRP_SERVER_FAST_START_MODE_ENABLE` be enabled.
 
@@ -173,7 +187,9 @@ Done
 
 ### lease
 
-Usage: `srp server lease [<min-lease>] [<max-lease>] [<min-key-lease>] [<max-key-lease>]`
+Usage: `srp server lease`
+
+Usage: `srp server lease <min-lease> <max-lease> <min-key-lease> <max-key-lease>`
 
 Get LEASE and KEY-LEASE values.
 
@@ -207,7 +223,9 @@ Done
 
 ### seqnum
 
-Usage: `srp server seqnum [<seqnum>]`
+Usage: `srp server seqnum`
+
+Usage: `srp server seqnum <seqnum>`
 
 Get or set the sequence number used with anycast address mode.
 

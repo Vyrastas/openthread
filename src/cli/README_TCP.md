@@ -54,21 +54,25 @@ For a more in-depth example, see [this video](https://youtu.be/ppZ784YUKlI).
 
 ## Command List
 
+Usage : `tcp [command] ...`
+
 - [help](#help)
-- [init](#init-size)
+- [init](#init)
 - [deinit](#deinit)
-- [bind](#bind-ip-port)
-- [connect](#connect-ip-port-fastopen)
-- [send](#send-message)
-- [benchmark](#benchmark-run-size)
+- [bind](#bind)
+- [connect](#connect)
+- [send](#send)
+- [benchmark](#benchmark)
 - [sendend](#sendend)
 - [abort](#abort)
-- [listen](#listen-ip-port)
+- [listen](#listen)
 - [stoplistening](#stoplistening)
 
 ## Command Details
 
 ### abort
+
+Usage: `tcp abort`
 
 Unceremoniously ends the TCP connection, if one exists, associated with the example TCP endpoint, transitioning the TCP endpoint to the closed state.
 
@@ -78,7 +82,9 @@ TCP: Connection reset
 Done
 ```
 
-### benchmark run [\<size\>]
+### benchmark
+
+Usage: `tcp benchmark run [<size>]`
 
 Transfers the specified number of bytes using the TCP connection currently associated with the example TCP endpoint (this TCP connection must be established before using this command).
 
@@ -91,7 +97,7 @@ TCP Benchmark Complete: Transferred 73728 bytes in 7233 milliseconds
 TCP Goodput: 81.546 kb/s
 ```
 
-### benchmark result
+Usage: `tcp benchmark result`
 
 Get the last result of TCP benchmark. If the benchmark is ongoing, it will show that benchmark is ongoing. This command is used for test scripts which automate the tcp benchmark test.
 
@@ -106,7 +112,9 @@ TCP Benchmark Complete: Transferred 73728 bytes in 7056 milliseconds
 TCP Goodput: 83.592 kb/s
 ```
 
-### bind \<ip\> \<port\>
+### bind
+
+Usage: `tcp bind <ip> <port>`
 
 Associates a name (i.e. IPv6 address and port) to the example TCP endpoint.
 
@@ -118,7 +126,9 @@ Associates a name (i.e. IPv6 address and port) to the example TCP endpoint.
 Done
 ```
 
-### connect \<ip\> \<port\> [\<fastopen\>]
+### connect
+
+Usage: `tcp connect <ip> <port> [<fastopen>]`
 
 Establishes a connection with the specified peer.
 
@@ -146,6 +156,8 @@ Done
 
 ### deinit
 
+Usage: `tcp deinit`
+
 Deinitializes the example TCP listener and the example TCP endpoint.
 
 ```bash
@@ -154,6 +166,8 @@ Done
 ```
 
 ### help
+
+Usage: `tcp help`
 
 List the TCP CLI commands.
 
@@ -173,7 +187,9 @@ stoplistening
 Done
 ```
 
-### init [\<mode\>]&nbsp;[\<size\>]
+### init
+
+Usage: `tcp init [<mode>] [<size>]`
 
 Initializes the example TCP listener and the example TCP endpoint.
 
@@ -189,7 +205,9 @@ The behaviors of "linked" and "circular" buffering are identical, but the option
 Done
 ```
 
-### listen \<ip\> \<port\>
+### listen
+
+Usage: `tcp listen <ip> <port>`
 
 Uses the example TCP listener to listen for incoming connections on the specified name (i.e. IPv6 address and port).
 
@@ -203,7 +221,9 @@ If no TCP connection is associated with the example TCP endpoint, then any incom
 Done
 ```
 
-### send \<message\>
+### send
+
+Usage: `tcp send <message>`
 
 Send data over the TCP connection associated with the example TCP endpoint.
 
@@ -216,6 +236,8 @@ Done
 
 ### sendend
 
+Usage: `tcp sendend`
+
 Sends the "end of stream" signal (i.e., FIN segment) over the TCP connection associated with the example TCP endpoint. This promises the peer that no more data will be sent to it over this TCP connection.
 
 ```bash
@@ -224,6 +246,8 @@ Done
 ```
 
 ### stoplistening
+
+Usage: `tcp stoplistening`
 
 Stops listening for incoming TCP connections using the example TCP listener.
 

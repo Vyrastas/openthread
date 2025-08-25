@@ -43,7 +43,11 @@ Done
 
 ### autostart
 
-Usage `srp client autostart [enable|disable]`
+Usage: `srp client autostart`
+
+Usage: `srp client autostart enable`
+
+Usage: `srp client autostart disable`
 
 Enable/Disable auto start mode in SRP client. This command requires `OPENTHREAD_CONFIG_SRP_CLIENT_AUTO_START_API_ENABLE` feature to be enabled.
 
@@ -68,7 +72,11 @@ Done
 
 ### callback
 
-Usage `srp client callback [enable|disable]`
+Usage: `srp client callback`
+
+Usage: `srp client callback enable`
+
+Usage: `srp client callback disable`
 
 Enable/Disable printing callback events from SRP client.
 
@@ -147,9 +155,9 @@ name:"dev1234", state:Registered, addrs:auto
 Done
 ```
 
-### host name
+Usage: `srp client host name`
 
-Usage: `srp client host name [name]`
+Usage: `srp client host name <name>`
 
 Get the host name.
 
@@ -166,9 +174,11 @@ srp client host name dev4312
 Done
 ```
 
-### host address
+Usage: `srp client host address`
 
-Usage : `srp client host address [auto | <address> ...]`
+Usage: `srp client host address auto`
+
+Usage: `srp client host address <address> ...`
 
 Indicate auto address mode is enabled.
 
@@ -201,8 +211,6 @@ Explicitly set the list of host addresses (can be set while client is running to
 Done
 ```
 
-### host state
-
 Usage: `srp client host state`
 
 Get the host state.
@@ -224,8 +232,6 @@ The possible states are (same value for service state):
 - `Registered`: item is registered with server.
 - `Removed`: item is removed.
 
-### host remove
-
 Usage: `srp client host remove [removekeylease] [sendunregtoserver]`
 
 Remove host info and all services from server.
@@ -238,8 +244,6 @@ Remove host info and all services from server.
 Done
 ```
 
-### host clear
-
 Usage: `srp client host clear`
 
 Clear host info and all services on client (unlike `host remove`, with `host clear` no update is sent to server).
@@ -251,7 +255,9 @@ Done
 
 ### keyleaseinterval
 
-Usage: `srp client keyleaseinterval [interval]`
+Usage: `srp client keyleaseinterval`
+
+Usage: `srp client keyleaseinterval <interval>`
 
 Get the key lease interval (in seconds).
 
@@ -271,7 +277,9 @@ Done
 
 ### leaseinterval
 
-Usage: `srp client leaseinterval [interval]`
+Usage: `srp client leaseinterval`
+
+Usage: `srp client leaseinterval <interval>`
 
 Get the lease interval (in seconds).
 
@@ -301,7 +309,7 @@ Print the server socket address (IPv6 address and port number).
 Done
 ```
 
-### server address
+Usage: `srp client server address`
 
 Print the server IPv6 address.
 
@@ -311,7 +319,7 @@ fd00:0:0:0:d88a:618b:384d:e760
 Done
 ```
 
-### server port
+Usage: `srp client server port`
 
 Print the server port number
 
@@ -334,8 +342,6 @@ instance:"ins1", name:"_test1._udp", state:Registered, port:777, priority:0, wei
 Done
 ```
 
-### service add
-
 Usage: `srp client service add <instancename> <servicename> <port> [priority] [weight] [txt]`
 
 Add a service with a given instance name, service name, port number, priority, weight and txt values.
@@ -352,8 +358,6 @@ Done
 Done
 ```
 
-### service remove
-
 Usage: `srp client service remove <instancename> <servicename>`
 
 Remove a service with a give instance name and service name.
@@ -362,8 +366,6 @@ Remove a service with a give instance name and service name.
 > srp client service remove ins2 _test2._udp
 Done
 ```
-
-### service clear
 
 Usage: `srp client service clear <instancename> <servicename>`
 
@@ -374,9 +376,11 @@ Clear a service with a give instance name and service name (unlike `service remo
 Done
 ```
 
-### service key
+Usage: `srp client service key`
 
-Usage `srp client service key [enable|disable]`
+Usage: `srp client service key enable`
+
+Usage: `srp client service key disable`
 
 Enable/Disable "service key record inclusion" mode in SRP client. This command requires `OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE` feature to be enabled.
 
@@ -437,7 +441,9 @@ Done
 
 ### ttl
 
-Usage: `srp client ttl [value]`
+Usage: `srp client ttl`
+
+Usage: `srp client ttl <value>`
 
 Get the TTL (in seconds).
 
