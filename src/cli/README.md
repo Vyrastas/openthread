@@ -19,7 +19,7 @@ Done
 >
 ```
 
-## OpenThread Command List
+## Command List
 
 - [attachtime](#attachtime)
 - [ba](#ba)
@@ -28,10 +28,10 @@ Done
 - [bufferinfo](#bufferinfo)
 - [ccathreshold](#ccathreshold)
 - [channel](#channel)
-- [child](#child-list)
+- [child](#child)
 - [childip](#childip)
 - [childmax](#childmax)
-- [childsupervision](#childsupervision-interval)
+- [childsupervision](#childsupervision)
 - [childtimeout](#childtimeout)
 - [coap](README_COAP.md)
 - [coaps](README_COAPS.md)
@@ -46,10 +46,10 @@ Done
 - [detach](#detach)
 - [deviceprops](#deviceprops)
 - [diag](#diag)
-- [discover](#discover-channel)
-- [dns](#dns-config)
+- [discover](#discover)
+- [dns](#dns)
 - [domainname](#domainname)
-- [dua](#dua-iid)
+- [dua](#dua)
 - [eidcache](#eidcache)
 - [eui64](#eui64)
 - [extaddr](#extaddr)
@@ -63,27 +63,27 @@ Done
 - [ipaddr](#ipaddr)
 - [ipmaddr](#ipmaddr)
 - [joiner](README_JOINER.md)
-- [joinerport](#joinerport-port)
-- [keysequence](#keysequence-counter)
+- [joinerport](#joinerport)
+- [keysequence](#keysequence)
 - [leaderdata](#leaderdata)
 - [leaderweight](#leaderweight)
-- [linkmetrics](#linkmetrics-config-async-ipaddr-enhanced-ack-clear)
-- [linkmetricsmgr](#linkmetricsmgr-disable)
+- [linkmetrics](#linkmetrics)
+- [linkmetricsmgr](#linkmetricsmgr)
 - [locate](#locate)
-- [log](#log-filename-filename)
-- [mac](#mac-altshortaddr)
+- [log](#log)
+- [mac](#mac)
 - [macfilter](#macfilter)
 - [mdns](README_MDNS.md)
-- [meshdiag](#meshdiag-topology-ip6-addrs-children)
-- [mliid](#mliid-iid)
-- [mlr](#mlr-reg-ipaddr--timeout)
+- [meshdiag](#meshdiag)
+- [mliid](#mliid)
+- [mlr](#mlr)
 - [mode](#mode)
 - [multiradio](#multiradio)
-- [nat64](#nat64-cidr)
-- [neighbor](#neighbor-list)
+- [nat64](#nat64)
+- [neighbor](#neighbor)
 - [netdata](README_NETDATA.md)
 - [netstat](#netstat)
-- [networkdiagnostic](#networkdiagnostic-get-addr-type-)
+- [networkdiagnostic](#networkdiagnostic)
 - [networkidtimeout](#networkidtimeout)
 - [networkkey](#networkkey)
 - [networkname](#networkname)
@@ -93,52 +93,52 @@ Done
 - [parent](#parent)
 - [parentpriority](#parentpriority)
 - [partitionid](#partitionid)
-- [ping](#ping-async--i-source--m-ipaddr-size-count-interval-hoplimit-timeout)
+- [ping](#ping)
 - [platform](#platform)
-- [pollperiod](#pollperiod-pollperiod)
-- [preferrouterid](#preferrouterid-routerid)
+- [pollperiod](#pollperiod)
+- [preferrouterid](#preferrouterid)
 - [prefix](#prefix)
 - [promiscuous](#promiscuous)
 - [pskc](#pskc)
 - [pskcref](#pskcref)
-- [radio](#radio-enable)
+- [radio](#radio)
 - [radiofilter](#radiofilter)
 - [rcp](#rcp)
 - [region](#region)
-- [releaserouterid](#releaserouterid-routerid)
+- [releaserouterid](#releaserouterid)
 - [reset](#reset)
 - [rloc16](#rloc16)
 - [route](#route)
-- [router](#router-list)
+- [router](#router)
 - [routerdowngradethreshold](#routerdowngradethreshold)
 - [routereligible](#routereligible)
 - [routerselectionjitter](#routerselectionjitter)
 - [routerupgradethreshold](#routerupgradethreshold)
 - [childrouterlinks](#childrouterlinks)
-- [scan](#scan-channel)
+- [scan](#scan)
 - [service](#service)
 - [singleton](#singleton)
-- [sntp](#sntp-query-sntp-server-ip-sntp-server-port)
+- [sntp](#sntp)
 - [state](#state)
 - [srp](README_SRP.md)
-- [targetpower](#targetpower-channel-targetpower)
+- [targetpower](#targetpower)
 - [tcat](README_TCAT.md)
 - [tcp](README_TCP.md)
-- [test](#test-tmforiginfilter-enabledisable)
-- [thread](#thread-start)
+- [test](#test)
+- [thread](#thread)
 - [timeinqueue](#timeinqueue)
 - [trel](#trel)
-- [tvcheck](#tvcheck-enable)
+- [tvcheck](#tvcheck)
 - [txpower](#txpower)
 - [udp](README_UDP.md)
-- [unsecureport](#unsecureport-add-port)
+- [unsecureport](#unsecureport)
 - [uptime](#uptime)
-- [vendor](#vendor-name)
-- [verhoeff](#verhoeff-calculate)
+- [vendor](#vendor)
+- [verhoeff](#verhoeff)
 - [version](#version)
-- [wakeup](#wakeup-channel)
+- [wakeup](#wakeup)
 
-## OpenThread Command Details
+## Command Details
 
 ### attachtime
 
@@ -153,6 +153,8 @@ Done
 ```
 
 ### bbr
+
+Usage: `bbr`
 
 Show current Primary Backbone Router information for Thread 1.2 device.
 
@@ -172,7 +174,7 @@ BBR Primary: None
 Done
 ```
 
-### bbr mgmt dua \<status\|coap-code\> [meshLocalIid]
+Usage: `bbr mgmt dua <status|coap-code> [meshLocalIid]`
 
 Configure the response status for DUA.req with meshLocalIid in payload. Without meshLocalIid, simply respond any coming DUA.req next with the specified status or COAP code.
 
@@ -196,7 +198,7 @@ Done
 Done
 ```
 
-### bbr mgmt mlr listener
+Usage: `bbr mgmt mlr listener`
 
 Show the Multicast Listeners.
 
@@ -209,7 +211,7 @@ ff04:0:0:0:0:0:0:eeee 3537610
 Done
 ```
 
-### bbr mgmt mlr listener add \<ipaddr\> \[\<timeout\>\]
+Usage: `bbr mgmt mlr listener add <ipaddr> [<timeout>]`
 
 Add a Multicast Listener with a given IPv6 multicast address and timeout (in seconds).
 
@@ -226,7 +228,7 @@ ff04:0:0:0:0:0:0:1 3522
 Done
 ```
 
-### bbr mgmt mlr listener clear
+Usage: `bbr mgmt mlr listener clear`
 
 Removes all the Multicast Listeners.
 
@@ -239,7 +241,7 @@ Done
 Done
 ```
 
-### bbr mgmt mlr response \<status\>
+Usage: `bbr mgmt mlr response <status>`
 
 Configure the response status for the next MLR.req.
 
@@ -259,7 +261,7 @@ Known status values:
 Done
 ```
 
-### bbr state
+Usage: `bbr state`
 
 Show local Backbone state ([`Disabled`,`Primary`, `Secondary`]) for Thread 1.2 FTD.
 
@@ -279,7 +281,7 @@ Secondary
 Done
 ```
 
-### bbr enable
+Usage: `bbr enable`
 
 Enable Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be triggered for attached device if there is no Backbone Router Service in Thread Network Data.
 
@@ -290,7 +292,7 @@ Enable Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be trigg
 Done
 ```
 
-### bbr disable
+Usage: `bbr disable`
 
 Disable Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be triggered if Backbone Router is Primary state. o `OPENTHREAD_CONFIG_BACKBONE_ROUTER_ENABLE` is required.
 
@@ -299,7 +301,7 @@ Disable Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be trig
 Done
 ```
 
-### bbr register
+Usage: `bbr register`
 
 Register Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be triggered for attached device.
 
@@ -310,7 +312,7 @@ Register Backbone Router Service for Thread 1.2 FTD. `SRV_DATA.ntf` would be tri
 Done
 ```
 
-### bbr config
+Usage: `bbr config`
 
 Show local Backbone Router configuration for Thread 1.2 FTD.
 
@@ -324,7 +326,7 @@ timeout:  300 secs
 Done
 ```
 
-### bbr config \[seqno \<seqno\>\] \[delay \<delay\>\] \[timeout \<timeout\>\]
+Usage: `bbr config [seqno <seqno>] [delay <delay>] [timeout <timeout>]`
 
 Configure local Backbone Router configuration for Thread 1.2 FTD. `bbr register` should be issued explicitly to register Backbone Router service to Leader for Secondary Backbone Router. `SRV_DATA.ntf` would be initiated automatically if BBR Dataset changes for Primary Backbone Router.
 
@@ -335,7 +337,7 @@ Configure local Backbone Router configuration for Thread 1.2 FTD. `bbr register`
 Done
 ```
 
-### bbr jitter
+Usage: `bbr jitter`
 
 Show jitter (in seconds) for Backbone Router registration for Thread 1.2 FTD.
 
@@ -347,7 +349,7 @@ Show jitter (in seconds) for Backbone Router registration for Thread 1.2 FTD.
 Done
 ```
 
-### bbr jitter \<jitter\>
+Usage: `bbr jitter <jitter>`
 
 Set jitter (in seconds) for Backbone Router registration for Thread 1.2 FTD.
 
@@ -360,9 +362,11 @@ Done
 
 ### ba
 
+Usage: `ba`
+
 Show current Border Agent information.
 
-### ba enable
+Usage: `ba enable`
 
 Enables Border Agent service.
 
@@ -376,7 +380,7 @@ By default, the Border Agent service is enabled. The `ba enable` and `ba disable
 Done
 ```
 
-### ba disable
+Usage: `ba disable`
 
 Disables Border Agent service.
 
@@ -385,7 +389,7 @@ Disables Border Agent service.
 Done
 ```
 
-### ba port
+Usage: `ba port`
 
 Print Border Agent's service port.
 
@@ -395,7 +399,7 @@ Print Border Agent's service port.
 Done
 ```
 
-### ba state
+Usage: `ba state`
 
 Print Border Agent's state.
 
@@ -411,7 +415,7 @@ Active
 Done
 ```
 
-### ba servicebasename \<name\>
+Usage: `ba servicebasename <name>`
 
 Sets the base name to construct the service instance name used when advertising the mDNS `_meshcop._udp` service by the Border Agent.
 
@@ -426,7 +430,7 @@ ba servicebasename OpenThreadBorderAgent
 Done
 ```
 
-### ba sessions
+Usage: `ba sessions`
 
 Prints the list of Border Agent's sessions. Information per session:
 
@@ -441,7 +445,7 @@ ba sessions
 Done
 ```
 
-### ba ephemeralkey
+Usage: `ba ephemeralkey`
 
 Print the Border Agent's Ephemeral Key Manager state.
 
@@ -468,7 +472,7 @@ Started
 Done
 ```
 
-### ba ephemeralkey enable
+Usage: `ba ephemeralkey enable`
 
 Enables the Border agent's Ephemeral Key Manager.
 
@@ -479,7 +483,7 @@ Requires `OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE`.
 Done
 ```
 
-### ba ephemeralkey disable
+Usage: `ba ephemeralkey disable`
 
 Disables the Border Agent's Ephemeral Key Manager.
 
@@ -494,7 +498,7 @@ Disabled
 Done
 ```
 
-### ba ephemeralkey start \<keystring\> \[timeout\] \[port\]
+Usage: `ba ephemeralkey start <keystring> [timeout] [port]`
 
 Starts using an ephemeral key for a given timeout duration.
 
@@ -527,7 +531,7 @@ Done
 Done
 ```
 
-### ba ephemeralkey stop
+Usage: `ba ephemeralkey stop`
 
 Stops the ephemeral key use and disconnects any session using it.
 
@@ -540,7 +544,7 @@ If there is no ephemeral key in use, calling this function has no effect.
 Done
 ```
 
-### ba ephemeralkey port
+Usage: `ba ephemeralkey port`
 
 Print the port number in use by Ephemeral Key Manager.
 
@@ -552,7 +556,7 @@ Requires `OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE`.
 Done
 ```
 
-### ba ephemeralkey callback enable
+Usage: `ba ephemeralkey callback enable`
 
 Enables callback from Border Agent to be notified of state changes of Border Agent's Ephemeral Key Manager.
 
@@ -570,7 +574,7 @@ BorderAgentEphemeralKey callback - state:Connected
 BorderAgentEphemeralKey callback - state:Stopped
 ```
 
-### ba ephemeralkey callback disable
+Usage: `ba ephemeralkey callback disable`
 
 Disables callback from Border Agent to be notified of state changes of Border Agent's Ephemeral Key Manager.
 
@@ -581,7 +585,7 @@ Requires `OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE`.
 Done
 ```
 
-### ba counters
+Usage: `ba counters`
 
 Get the border agent counter values.
 
@@ -647,6 +651,8 @@ Done
 
 ### ccathreshold
 
+Usage: `ccathreshold`
+
 Get the CCA threshold in dBm measured at antenna connector per IEEE 802.15.4 - 2015 section 10.1.4.
 
 ```bash
@@ -655,7 +661,7 @@ Get the CCA threshold in dBm measured at antenna connector per IEEE 802.15.4 - 2
 Done
 ```
 
-### ccathreshold \<ccathreshold\>
+Usage: `ccathreshold <ccathreshold>`
 
 Set the CCA threshold measured at antenna connector per IEEE 802.15.4 - 2015 section 10.1.4.
 
@@ -666,6 +672,8 @@ Done
 
 ### channel
 
+Usage: `channel`
+
 Get the IEEE 802.15.4 Channel value.
 
 ```bash
@@ -674,7 +682,7 @@ Get the IEEE 802.15.4 Channel value.
 Done
 ```
 
-### channel \<channel\>
+Usage: `channel <channel>`
 
 Set the IEEE 802.15.4 Channel value.
 
@@ -683,7 +691,7 @@ Set the IEEE 802.15.4 Channel value.
 Done
 ```
 
-### channel manager
+Usage: `channel manager`
 
 Get channel manager state.
 
@@ -699,7 +707,7 @@ favored: { 11-26}
 Done
 ```
 
-### channel manager change \<channel\>
+Usage: `channel manager change <channel>`
 
 Initiate a channel change with the channel manager.
 
@@ -711,7 +719,7 @@ channel manager change 11
 Done
 ```
 
-### channel manager select \<skip quality check (boolean)\>
+Usage: `channel manager select <skip quality check (boolean)>`
 
 Request a channel selection with the channel manager.
 
@@ -723,7 +731,7 @@ channel manager select 1
 Done
 ```
 
-### channel manager auto \<enable (boolean)\>
+Usage: `channel manager auto <enable (boolean)>`
 
 Enable/disable the auto-channel-selection functionality.
 
@@ -735,7 +743,7 @@ channel manager auto 1
 Done
 ```
 
-### channel manager delay \<delay\>
+Usage: `channel manager delay <delay>`
 
 Set the channel change delay (in seconds).
 
@@ -747,7 +755,7 @@ channel manager delay 120
 Done
 ```
 
-### channel manager interval \<interval\>
+Usage: `channel manager interval <interval>`
 
 Set the auto-channel-selection interval (in seconds).
 
@@ -759,7 +767,7 @@ channel manager interval 10800
 Done
 ```
 
-### channel manager supported \<mask\>
+Usage: `channel manager supported <mask>`
 
 Set the supported channel mask for the auto-channel-selection.
 
@@ -771,7 +779,7 @@ channel manager supported 0x7fffc00
 Done
 ```
 
-### channel manager favored \<mask\>
+Usage: `channel manager favored <mask>`
 
 Set the favored channel mask for the auto-channel-selection.
 
@@ -783,7 +791,7 @@ channel manager favored 0x7fffc00
 Done
 ```
 
-### channel monitor
+Usage: `channel monitor`
 
 Get current channel monitor state and channel occupancy.
 
@@ -818,7 +826,7 @@ ch 26 (0x058c)  2.16% busy
 Done
 ```
 
-### channel monitor start
+Usage: `channel monitor start`
 
 Start the channel monitor.
 
@@ -830,7 +838,7 @@ channel monitor start
 Done
 ```
 
-### channel monitor stop
+Usage: `channel monitor stop`
 
 Stop the channel monitor.
 
@@ -842,7 +850,7 @@ channel monitor stop
 Done
 ```
 
-### channel preferred
+Usage: `channel preferred`
 
 Get preferred channel mask.
 
@@ -852,7 +860,7 @@ Get preferred channel mask.
 Done
 ```
 
-### channel supported
+Usage: `channel supported`
 
 Get supported channel mask.
 
@@ -862,7 +870,9 @@ Get supported channel mask.
 Done
 ```
 
-### child list
+### child
+
+Usage: `child list`
 
 List attached Child IDs.
 
@@ -872,7 +882,7 @@ List attached Child IDs.
 Done
 ```
 
-### child table
+Usage: `child table`
 
 Print table of attached children.
 
@@ -885,7 +895,7 @@ Print table of attached children.
 Done
 ```
 
-### child \<id\>
+Usage: `child <id>`
 
 Print diagnostic information for an attached Thread Child. The `id` may be a Child ID or an RLOC16.
 
@@ -907,6 +917,8 @@ Done
 
 ### childip
 
+Usage: `childip`
+
 Get the list of IP addresses stored for MTD children.
 
 ```bash
@@ -915,7 +927,7 @@ Get the list of IP addresses stored for MTD children.
 Done
 ```
 
-### childip max
+Usage: `childip max`
 
 Get the maximum number of IP addresses that each MTD child may register with this device as parent.
 
@@ -925,7 +937,7 @@ Get the maximum number of IP addresses that each MTD child may register with thi
 Done
 ```
 
-### childip max \<count\>
+Usage: `childip max <count>`
 
 Set the maximum number of IP addresses that each MTD child may register with this device as parent. 0 to clear the setting and restore the default.
 
@@ -938,6 +950,8 @@ Done
 
 ### childmax
 
+Usage: `childmax`
+
 Get the Thread maximum number of allowed children.
 
 ```bash
@@ -946,7 +960,7 @@ Get the Thread maximum number of allowed children.
 Done
 ```
 
-### childmax \<count\>
+Usage: `childmax <count>`
 
 Set the Thread maximum number of allowed children.
 
@@ -955,7 +969,9 @@ Set the Thread maximum number of allowed children.
 Done
 ```
 
-### childsupervision interval
+### childsupervision
+
+Usage: `childsupervision interval`
 
 Get the Child Supervision interval value on the child.
 
@@ -967,7 +983,7 @@ Child Supervision feature provides a mechanism for parent to ensure that a messa
 Done
 ```
 
-### childsupervision interval \<interval\>
+Usage: `childsupervision interval <interval>`
 
 Set the Child Supervision interval value on the child.
 
@@ -976,7 +992,7 @@ Set the Child Supervision interval value on the child.
 Done
 ```
 
-### childsupervision checktimeout
+Usage: `childsupervision checktimeout`
 
 Get the Child Supervision Check Timeout value on the child.
 
@@ -988,7 +1004,7 @@ If the device is a sleepy child and it does not hear from its parent within the 
 Done
 ```
 
-### childsupervision checktimeout \<timeout\>
+Usage: `childsupervision checktimeout <timeout>`
 
 Set the Child Supervision Check Timeout value on the child.
 
@@ -997,7 +1013,7 @@ Set the Child Supervision Check Timeout value on the child.
 Done
 ```
 
-### childsupervision failcounter
+Usage: `childsupervision failcounter`
 
 Get the current value of supervision check timeout failure counter.
 
@@ -1009,7 +1025,7 @@ The counter tracks the number of supervision check failures on the child. It is 
 Done
 ```
 
-### childsupervision failcounter reset
+Usage: `childsupervision failcounter reset`
 
 Reset the supervision check timeout failure counter to zero.
 
@@ -1020,6 +1036,8 @@ Done
 
 ### childtimeout
 
+Usage: `childtimeout`
+
 Get the Thread Child Timeout value.
 
 ```bash
@@ -1028,7 +1046,7 @@ Get the Thread Child Timeout value.
 Done
 ```
 
-### childtimeout \<timeout\>
+Usage: `childtimeout <timeout>`
 
 Set the Thread Child Timeout value.
 
@@ -1105,6 +1123,8 @@ Done
 
 ### contextreusedelay
 
+Usage: `contextreusedelay`
+
 Get the CONTEXT_ID_REUSE_DELAY value.
 
 ```bash
@@ -1113,7 +1133,7 @@ Get the CONTEXT_ID_REUSE_DELAY value.
 Done
 ```
 
-### contextreusedelay \<delay\>
+Usage: `contextreusedelay <delay>`
 
 Set the CONTEXT_ID_REUSE_DELAY value.
 
@@ -1123,6 +1143,8 @@ Done
 ```
 
 ### counters
+
+Usage: `counters`
 
 Get the supported counter names.
 
@@ -1135,7 +1157,7 @@ mle
 Done
 ```
 
-### counters \<countername\>
+Usage: `counters <countername>`
 
 Get the counter value.
 
@@ -1215,7 +1237,7 @@ RS TxFailed: 0
 Done
 ```
 
-### counters \<countername\> reset
+Usage: `counters <countername> reset`
 
 Reset the counter value.
 
@@ -1229,6 +1251,8 @@ Done
 ```
 
 ### csl
+
+Usage: `csl`
 
 Get the CSL configuration.
 
@@ -1244,7 +1268,7 @@ timeout: 1000s
 Done
 ```
 
-### csl channel \<channel\>
+Usage: `csl channel <channel>`
 
 Set CSL channel.
 
@@ -1255,7 +1279,7 @@ Set CSL channel.
 Done
 ```
 
-### csl period \<period\>
+Usage: `csl period <period>`
 
 Set CSL period in microseconds. Disable CSL by setting this parameter to `0`.
 
@@ -1268,7 +1292,7 @@ The CSL period MUST be a multiple 160 microseconds which is 802.15.4 "ten symbol
 Done
 ```
 
-### csl timeout \<timeout\>
+Usage: `csl timeout <timeout>`
 
 Set the CSL timeout in seconds.
 
@@ -1279,7 +1303,7 @@ Set the CSL timeout in seconds.
 Done
 ```
 
-### csl accuracy
+Usage: `csl accuracy`
 
 Gets the CSL Accuracy in units of PPM.
 
@@ -1291,7 +1315,7 @@ Gets the CSL Accuracy in units of PPM.
 Done
 ```
 
-### csl uncertainty
+Usage: `csl uncertainty`
 
 Gets the CSL Uncertainty in units of 10 us.
 
@@ -1304,6 +1328,8 @@ Done
 ```
 
 ### debug
+
+Usage: `debug`
 
 Executes a series of CLI commands to gather information about the device and thread network. This is intended for debugging.
 
@@ -1351,6 +1377,8 @@ If the device supports and acts as a border router:
 
 ### delaytimermin
 
+Usage: `delaytimermin`
+
 Get the minimal delay timer (in seconds).
 
 ```bash
@@ -1359,7 +1387,7 @@ Get the minimal delay timer (in seconds).
 Done
 ```
 
-### delaytimermin \<delaytimermin\>
+Usage: `delaytimermin <delaytimermin>`
 
 Set the minimal delay timer (in seconds).
 
@@ -1370,6 +1398,8 @@ Done
 
 ### detach
 
+Usage: `detach`
+
 Start the graceful detach process by first notifying other nodes (sending Address Release if acting as a router, or setting Child Timeout value to zero on parent if acting as a child) and then stopping Thread protocol operation.
 
 ```bash
@@ -1378,7 +1408,7 @@ Finished detaching
 Done
 ```
 
-### detach async
+Usage: `detach async`
 
 Start the graceful detach process similar to the `detach` command without blocking and waiting for the callback indicating that detach is finished.
 
@@ -1388,6 +1418,8 @@ Done
 ```
 
 ### deviceprops
+
+Usage: `deviceprops`
 
 Get the current device properties.
 
@@ -1401,7 +1433,7 @@ WeightAdjustment : 0
 Done
 ```
 
-### deviceprops \<power-supply\> \<is-br\> \<supports-ccm\> \<is-unstable\> \<weight-adjustment\>
+Usage: `deviceprops <power-supply> <is-br> <supports-ccm> <is-unstable> <weight-adjustment>`
 
 Set the device properties which are then used to determine and set the Leader Weight.
 
@@ -1425,7 +1457,9 @@ Done
 Done
 ```
 
-### discover \[channel\]
+### discover
+
+Usage: `discover [channel]`
 
 Perform an MLE Discovery operation.
 
@@ -1439,7 +1473,9 @@ Perform an MLE Discovery operation.
 Done
 ```
 
-### dns config
+### dns
+
+Usage: `dns config`
 
 Get the default query config used by DNS client.
 
@@ -1471,7 +1507,7 @@ Done
 >
 ```
 
-### dns config \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\] \[service mode] \[protocol]
+Usage: `dns config [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)] [service mode] [protocol]`
 
 Set the default query config.
 
@@ -1534,7 +1570,7 @@ TransportProtocol: udp
 Done
 ```
 
-### dns resolve \<hostname\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\] \[transport protocol\]
+Usage: `dns resolve <hostname> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)] [transport protocol]`
 
 Send DNS Query to obtain IPv6 address for given hostname.
 
@@ -1558,7 +1594,7 @@ DNS response for example.com. - fd4c:9574:3720:2:0:0:5db8:d822 TTL:20456
 Done
 ```
 
-### dns resolve4 \<hostname\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\]
+Usage: `dns resolve4 <hostname> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)]`
 
 Send DNS query to obtain IPv4 address for a given hostname and provide the NAT64 synthesized IPv6 addresses for the IPv4 addresses from the query response.
 
@@ -1575,7 +1611,7 @@ For example, if a NAT64 prefix of `2001:db8:122:344::/96` is used within the Thr
 > DNS response for ipv4.google.com - 2001:db8:122:344:0:0:8efa:bf4e TTL: 20456
 ```
 
-### dns browse \<service-name\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\]
+Usage: `dns browse <service-name> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)]`
 
 Send a browse (service instance enumeration) DNS query to get the list of services for given service-name.
 
@@ -1617,7 +1653,7 @@ Done
 
 > Note: The DNS server IP can be an IPv4 address, which will be synthesized to an IPv6 address using the preferred NAT64 prefix from the network data. The command will return `InvalidState` when the DNS server IP is an IPv4 address but the preferred NAT64 prefix is unavailable. When testing DNS-SD discovery proxy, the zone is not `local` and instead should be `default.service.arpa`.
 
-### dns service \<service-instance-label\> \<service-name\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\]
+Usage: `dns service <service-instance-label> <service-name> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)]`
 
 Send a service instance resolution DNS query for a given service instance. Service instance label is provided first, followed by the service name (note that service instance label can contain dot '.' character).
 
@@ -1625,7 +1661,7 @@ The parameters after `service-name` are optional. Any unspecified (or zero) valu
 
 > Note: The DNS server IP can be an IPv4 address, which will be synthesized to an IPv6 address using the preferred NAT64 prefix from the network data. The command will return `InvalidState` when the DNS server IP is an IPv4 address but the preferred NAT64 prefix is unavailable.
 
-### dns servicehost \<service-instance-label\> \<service-name\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\]
+Usage: `dns servicehost <service-instance-label> <service-name> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)]`
 
 Send a service instance resolution DNS query for a given service instance with a potential follow-up address resolution for the host name discovered for the service instance (if the server/resolver does not provide AAAA/A records for the host name in the response to SRV query).
 
@@ -1633,7 +1669,7 @@ Service instance label is provided first, followed by the service name (note tha
 
 The parameters after `service-name` are optional. Any unspecified (or zero) value for these optional parameters is replaced by the value from the current default config (`dns config`).
 
-### dns query \<record-type\> \<first-label\> \<next-labels\> \[DNS server IP\] \[DNS server port\] \[response timeout (ms)\] \[max tx attempts\] \[recursion desired (boolean)\]
+Usage: `dns query <record-type> <first-label> <next-labels> [DNS server IP] [DNS server port] [response timeout (ms)] [max tx attempts] [recursion desired (boolean)]`
 
 Requires `OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE` and `OPENTHREAD_CONFIG_DNS_CLIENT_ARBITRARY_RECORD_QUERY_ENABLE`.
 
@@ -1655,7 +1691,7 @@ DNS query response for myhost.default.service.arpa.
 Done
 ```
 
-### dns server upstream \[enable|disable\]
+Usage: `dns server upstream [enable|disable]`
 
 Enable/Disable the upstream DNS feature. If no argument is provided, it prints whether the upstream DNS feature is enabled.
 
@@ -1676,7 +1712,7 @@ Enabled
 Done
 ```
 
-### dns compression \[enable|disable\]
+Usage: `dns compression [enable|disable]`
 
 Enable/Disable the "DNS name compression" mode.
 
@@ -1705,6 +1741,8 @@ Done
 
 ### domainname
 
+Usage: `domainname`
+
 Get the Thread Domain Name for Thread 1.2 device.
 
 ```bash
@@ -1713,7 +1751,7 @@ Thread
 Done
 ```
 
-### domainname \<name\>
+Usage: `domainname <name>`
 
 Set the Thread Domain Name for Thread 1.2 device.
 
@@ -1722,7 +1760,9 @@ Set the Thread Domain Name for Thread 1.2 device.
 Done
 ```
 
-### dua iid
+### dua
+
+Usage: `dua iid`
 
 Get the Interface Identifier manually specified for Thread Domain Unicast Address on Thread 1.2 device.
 
@@ -1732,7 +1772,7 @@ Get the Interface Identifier manually specified for Thread Domain Unicast Addres
 Done
 ```
 
-### dua iid \<iid\>
+Usage: `dua iid <iid>`
 
 Set the Interface Identifier manually specified for Thread Domain Unicast Address on Thread 1.2 device.
 
@@ -1741,7 +1781,7 @@ Set the Interface Identifier manually specified for Thread Domain Unicast Addres
 Done
 ```
 
-### dua iid clear
+Usage: `dua iid clear`
 
 Clear the Interface Identifier manually specified for Thread Domain Unicast Address on Thread 1.2 device.
 
@@ -1751,6 +1791,8 @@ Done
 ```
 
 ### eidcache
+
+Usage: `eidcache`
 
 Print the EID-to-RLOC cache entries.
 
@@ -1763,6 +1805,8 @@ Done
 
 ### eui64
 
+Usage: `eui64`
+
 Get the factory-assigned IEEE EUI-64.
 
 ```bash
@@ -1773,6 +1817,8 @@ Done
 
 ### extaddr
 
+Usage: `extaddr`
+
 Get the IEEE 802.15.4 Extended Address.
 
 ```bash
@@ -1781,7 +1827,7 @@ dead00beef00cafe
 Done
 ```
 
-### extaddr \<extaddr\>
+Usage: `extaddr <extaddr>`
 
 Set the IEEE 802.15.4 Extended Address.
 
@@ -1793,6 +1839,8 @@ Done
 
 ### extpanid
 
+Usage: `extpanid`
+
 Get the Thread Extended PAN ID value.
 
 **NOTE** The current commissioning credential becomes stale after changing this value. Use [pskc](#pskc--p-keypassphrase) to reset.
@@ -1803,7 +1851,7 @@ dead00beef00cafe
 Done
 ```
 
-### extpanid \<extpanid\>
+Usage: `extpanid <extpanid>`
 
 Set the Thread Extended PAN ID value.
 
@@ -1814,6 +1862,8 @@ Done
 
 ### factoryreset
 
+Usage: `factoryreset`
+
 Delete all stored settings, and signal a platform reset.
 
 ```bash
@@ -1822,11 +1872,11 @@ Delete all stored settings, and signal a platform reset.
 
 ### fake
 
+Usage: `fake /a/an <dst-ipaddr> <target> <meshLocalIid>`
+
 Send fake Thread messages.
 
 Note: Only for certification test.
-
-#### fake /a/an \<dst-ipaddr\> \<target\> \<meshLocalIid\>
 
 ```bash
 > fake /a/an fdde:ad00:beef:0:0:ff:fe00:a800 fd00:7d03:7d03:7d03:55f2:bb6a:7a43:a03b 1111222233334444
@@ -1834,6 +1884,8 @@ Done
 ```
 
 ### fem
+
+Usage: `fem`
 
 Get external FEM parameters.
 
@@ -1843,7 +1895,7 @@ LNA gain 11 dBm
 Done
 ```
 
-### fem lnagain
+Usage: `fem lnagain`
 
 Get the Rx LNA gain in dBm of the external FEM.
 
@@ -1853,7 +1905,7 @@ Get the Rx LNA gain in dBm of the external FEM.
 Done
 ```
 
-### fem lnagain \<LNA gain\>
+Usage: `fem lnagain <LNA gain>`
 
 Set the Rx LNA gain in dBm of the external FEM.
 
@@ -1864,6 +1916,8 @@ Done
 
 ### ifconfig
 
+Usage: `ifconfig`
+
 Show the status of the IPv6 interface.
 
 ```bash
@@ -1872,7 +1926,7 @@ down
 Done
 ```
 
-### ifconfig up
+Usage: `ifconfig up`
 
 Bring up the IPv6 interface.
 
@@ -1881,7 +1935,7 @@ Bring up the IPv6 interface.
 Done
 ```
 
-### ifconfig down
+Usage: `ifconfig down`
 
 Bring down the IPv6 interface.
 
@@ -1892,6 +1946,8 @@ Done
 
 ### instanceid
 
+Usage: `instanceid`
+
 Show OpenThread instance identifier.
 
 ```bash
@@ -1901,6 +1957,8 @@ Done
 ```
 
 ### ipaddr
+
+Usage: `ipaddr`
 
 List all IPv6 addresses assigned to the Thread interface.
 
@@ -1928,7 +1986,7 @@ fe80:0:0:0:4891:b191:e277:8826 origin:thread plen:64 preferred:1 valid:1
 Done
 ```
 
-### ipaddr add \<ipaddr\>
+Usage: `ipaddr add <ipaddr>`
 
 Add an IPv6 address to the Thread interface.
 
@@ -1937,7 +1995,7 @@ Add an IPv6 address to the Thread interface.
 Done
 ```
 
-### ipaddr del \<ipaddr\>
+Usage: `ipaddr del <ipaddr>`
 
 Delete an IPv6 address from the Thread interface.
 
@@ -1946,7 +2004,7 @@ Delete an IPv6 address from the Thread interface.
 Done
 ```
 
-### ipaddr linklocal
+Usage: `ipaddr linklocal`
 
 Print Thread link-local IPv6 address.
 
@@ -1956,7 +2014,7 @@ fe80:0:0:0:f3d9:2a82:c8d8:fe43
 Done
 ```
 
-### ipaddr mleid
+Usage: `ipaddr mleid`
 
 Print Thread Mesh Local EID address.
 
@@ -1966,7 +2024,7 @@ fdde:ad00:beef:0:558:f56b:d688:799
 Done
 ```
 
-### ipaddr rloc
+Usage: `ipaddr rloc`
 
 Print Thread Routing Locator (RLOC) address.
 
@@ -1978,6 +2036,8 @@ Done
 
 ### ipmaddr
 
+Usage: `ipmaddr`
+
 List all IPv6 multicast addresses subscribed to the Thread interface.
 
 ```bash
@@ -1988,7 +2048,7 @@ ff32:40:fdde:ad00:beef:0:0:1
 Done
 ```
 
-### ipmaddr add \<ipaddr\>
+Usage: `ipmaddr add <ipaddr>`
 
 Subscribe the Thread interface to the IPv6 multicast address.
 
@@ -1997,7 +2057,7 @@ Subscribe the Thread interface to the IPv6 multicast address.
 Done
 ```
 
-### ipmaddr del \<ipaddr\>
+Usage: `ipmaddr del <ipaddr>`
 
 Unsubscribe the Thread interface to the IPv6 multicast address.
 
@@ -2006,7 +2066,7 @@ Unsubscribe the Thread interface to the IPv6 multicast address.
 Done
 ```
 
-### ipmaddr llatn
+Usage: `ipmaddr llatn`
 
 Get the Link-Local All Thread Nodes multicast address.
 
@@ -2016,7 +2076,7 @@ ff32:40:fdde:ad00:beef:0:0:1
 Done
 ```
 
-### ipmaddr rlatn
+Usage: `ipmaddr rlatn`
 
 Get the Realm-Local All Thread Nodes multicast address.
 
@@ -2026,7 +2086,9 @@ ff33:40:fdde:ad00:beef:0:0:1
 Done
 ```
 
-### joinerport \<port\>
+### joinerport
+
+Usage: `joinerport <port>`
 
 Set the Joiner port.
 
@@ -2035,7 +2097,9 @@ Set the Joiner port.
 Done
 ```
 
-### keysequence counter
+### keysequence
+
+Usage: `keysequence counter`
 
 Get the Thread Key Sequence Counter.
 
@@ -2045,7 +2109,7 @@ Get the Thread Key Sequence Counter.
 Done
 ```
 
-### keysequence counter \<counter\>
+Usage: `keysequence counter <counter>`
 
 Set the Thread Key Sequence Counter.
 
@@ -2056,7 +2120,7 @@ This command is reserved for testing and demo purposes only. Changing Key Sequen
 Done
 ```
 
-### keysequence guardtime
+Usage: `keysequence guardtime`
 
 Get Thread Key Switch Guard Time (in hours)
 
@@ -2066,7 +2130,7 @@ Get Thread Key Switch Guard Time (in hours)
 Done
 ```
 
-### keysequence guardtime \<guardtime\>
+Usage: `keysequence guardtime <guardtime>`
 
 Set Thread Key Switch Guard Time (in hours).
 
@@ -2078,6 +2142,8 @@ Done
 ```
 
 ### leaderdata
+
+Usage: `leaderdata`
 
 Show the Thread Leader Data.
 
@@ -2093,6 +2159,8 @@ Done
 
 ### leaderweight
 
+Usage: `leaderweight`
+
 Get the Thread Leader Weight.
 
 ```bash
@@ -2101,7 +2169,7 @@ Get the Thread Leader Weight.
 Done
 ```
 
-### leaderweight \<weight\>
+Usage: `leaderweight <weight>`
 
 Set the Thread Leader Weight.
 
@@ -2110,7 +2178,9 @@ Set the Thread Leader Weight.
 Done
 ```
 
-### linkmetrics config \[async\] \<ipaddr\> enhanced-ack clear
+### linkmetrics
+
+Usage: `linkmetrics config [async] <ipaddr> enhanced-ack clear`
 
 Send a Link Metrics Management Request to clear an Enhanced-ACK Based Probing.
 
@@ -2129,7 +2199,7 @@ Done
 Status: Success
 ```
 
-### linkmetrics config \[async\] \<ipaddr\> enhanced-ack register \<qmr\> \[r\]
+Usage: `linkmetrics config [async] <ipaddr> enhanced-ack register <qmr> [r]`
 
 Send a Link Metrics Management Request to register an Enhanced-ACK Based Probing.
 
@@ -2158,7 +2228,7 @@ Done
 Status: Cannot support new series
 ```
 
-### linkmetrics config \[async\] \<ipaddr\> forward \<seriesid\> \<ldraX\> \<pqmr\>
+Usage: `linkmetrics config [async] <ipaddr> forward <seriesid> <ldraX> <pqmr>`
 
 Send a Link Metrics Management Request to configure a Forward Tracking Series.
 
@@ -2189,7 +2259,7 @@ Done
 Status: SUCCESS
 ```
 
-### linkmetrics probe \<ipaddr\> \<seriesid\> \<length\>
+Usage: `linkmetrics probe <ipaddr> <seriesid> <length>`
 
 Send a MLE Link Probe message to the peer.
 
@@ -2202,7 +2272,7 @@ Send a MLE Link Probe message to the peer.
 Done
 ```
 
-### linkmetrics request \[async\] \<ipaddr\> single \<pqmr\>
+Usage: `linkmetrics request [async] <ipaddr> single <pqmr>`
 
 Perform a Link Metrics query (Single Probe).
 
@@ -2232,7 +2302,7 @@ Done
  - RSSI: -18 (dBm) (Exponential Moving Average)
 ```
 
-### linkmetrics request \[async\] \<ipaddr\> forward \<seriesid\>
+Usage: `linkmetrics request [async] <ipaddr> forward <seriesid>`
 
 Perform a Link Metrics query (Forward Tracking Series).
 
@@ -2260,7 +2330,9 @@ Done
  - RSSI: -18 (dBm) (Exponential Moving Average)
 ```
 
-### linkmetricsmgr disable
+### linkmetricsmgr
+
+Usage: `linkmetricsmgr disable`
 
 Disable the Link Metrics Manager.
 
@@ -2271,7 +2343,7 @@ Disable the Link Metrics Manager.
 Done
 ```
 
-### linkmetricsmgr enable
+Usage: `linkmetricsmgr enable`
 
 Enable the Link Metrics Manager.
 
@@ -2282,7 +2354,7 @@ Enable the Link Metrics Manager.
 Done
 ```
 
-### linkmetricsmgr show
+Usage: `linkmetricsmgr show`
 
 Display the Link Metrics data of all subjects. The subjects are identified by its extended address.
 
@@ -2296,6 +2368,8 @@ Done
 ```
 
 ### locate
+
+Usage: `locate`
 
 Gets the current state (`In Progress` or `Idle`) of anycast locator.
 
@@ -2313,7 +2387,7 @@ In Progress
 Done
 ```
 
-### locate \<anycastaddr\>
+Usage: `locate <anycastaddr>`
 
 Locate the closest destination of an anycast address (i.e., find the destination's mesh local EID and RLOC16).
 
@@ -2349,14 +2423,16 @@ fdde:ad00:beef:0:a477:dc98:a4e4:71ea 0xcc00
 done
 ```
 
-### log filename \<filename\>
+### log
+
+Usage: `log filename <filename>`
 
 - Note: Simulation Only, ie: `OPENTHREAD_EXAMPLES_SIMULATION`
 - Requires `OPENTHREAD_CONFIG_LOG_OUTPUT == OPENTHREAD_CONFIG_LOG_OUTPUT_DEBUG_UART`
 
 Specifies filename to capture otPlatLog() messages, useful when debugging automated test scripts on Linux when logging disrupts the automated test scripts.
 
-### log level
+Usage: `log level`
 
 Get the log level.
 
@@ -2366,7 +2442,7 @@ Get the log level.
 Done
 ```
 
-### log level \<level\>
+Usage: `log level <level>`
 
 Set the log level.
 
@@ -2375,7 +2451,223 @@ Set the log level.
 Done
 ```
 
-### meshdiag topology \[ip6-addrs\] \[children\]
+### mac
+
+Usage: `mac altshortaddr`
+
+Get the alternate short address used by MAC layer. Can be `0xfffe` if not set.
+
+```bash
+> mac altshortaddr
+0x4801
+Done
+```
+
+Usage: `mac retries direct`
+
+Get the number of direct TX retries on the MAC layer.
+
+```bash
+> mac retries direct
+3
+Done
+```
+
+Usage: `mac retries direct <number>`
+
+Set the number of direct TX retries on the MAC layer.
+
+```bash
+> mac retries direct 5
+Done
+```
+
+Usage: `mac retries indirect`
+
+Get the number of indirect TX retries on the MAC layer.
+
+```bash
+> mac retries indirect
+3
+Done
+```
+
+Usage: `mac retries indirect <number>`
+
+Set the number of indirect TX retries on the MAC layer.
+
+```bash
+> mac retries indirect 5
+Done
+```
+
+Usage: `mac send <op>`
+
+Instruct an Rx-Off-When-Idle device to send a mac frame to its parent. The mac frame could be either a mac data request or an empty mac data frame. Use `datarequest` to send a mac data request and `data` to send an empty mac data. This feature is for certification, it can only be used when `OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE` is enabled.
+
+```bash
+> mac send datarequest
+Done
+```
+
+```bash
+> mac send emptydata
+Done
+```
+
+### macfilter
+
+Usage: `macfilter`
+
+List the macfilter status, including address and received signal strength filter settings.
+
+```bash
+> macfilter
+Address Mode: Allowlist
+0f6127e33af6b403 : rss -95 (lqi 1)
+0f6127e33af6b402
+RssIn List:
+0f6127e33af6b403 : rss -95 (lqi 1)
+Default rss: -50 (lqi 3)
+Done
+```
+
+Usage: `macfilter addr`
+
+List the address filter status.
+
+```bash
+> macfilter addr
+Allowlist
+0f6127e33af6b403 : rss -95 (lqi 1)
+0f6127e33af6b402
+Done
+```
+
+Usage: `macfilter addr disable`
+
+Disable address filter mode.
+
+```bash
+> macfilter addr disable
+Done
+```
+
+Usage: `macfilter addr allowlist`
+
+Enable allowlist address filter mode.
+
+```bash
+> macfilter addr allowlist
+Done
+```
+
+Usage: `macfilter addr denylist`
+
+Enable denylist address filter mode.
+
+```bash
+> macfilter addr denylist
+Done
+```
+
+Usage: `macfilter addr add <extaddr> [rss]`
+
+Add an IEEE 802.15.4 Extended Address to the address filter, and fixed the received signal strength for the messages from the address if rss is specified.
+
+```bash
+> macfilter addr add 0f6127e33af6b403 -95
+Done
+```
+
+```bash
+> macfilter addr add 0f6127e33af6b402
+Done
+```
+
+Usage: `macfilter addr remove <extaddr>`
+
+Remove the IEEE802.15.4 Extended Address from the address filter.
+
+```bash
+> macfilter addr remove 0f6127e33af6b402
+Done
+```
+
+Usage: `macfilter addr clear`
+
+Clear all the IEEE802.15.4 Extended Addresses from the address filter.
+
+```bash
+> macfilter addr clear
+Done
+```
+
+Usage: `macfilter rss`
+
+List the rss filter status
+
+```bash
+> macfilter rss
+0f6127e33af6b403 : rss -95 (lqi 1)
+Default rss: -50 (lqi 3)
+Done
+```
+
+Usage: `macfilter rss add <extaddr> <rss>`
+
+Set the received signal strength for the messages from the IEEE802.15.4 Extended Address. If extaddr is \*, default received signal strength for all received messages would be set.
+
+```bash
+> macfilter rss add * -50
+Done
+```
+
+```bash
+> macfilter rss add 0f6127e33af6b404 -85
+Done
+```
+
+Usage: `macfilter rss add-lqi <extaddr> <lqi>`
+
+Set the received link quality for the messages from the IEEE802.15.4 Extended Address. Valid lqi range [0,3] If extaddr is \*, default received link quality for all received messages would be set. Equivalent with 'filter rss add' with similar usage
+
+```bash
+> macfilter rss add-lqi * 3
+Done
+```
+
+```bash
+> macfilter rss add-lqi 0f6127e33af6b404 2
+Done
+```
+
+Usage: `macfilter rss remove <extaddr>`
+
+Removes the received signal strength or received link quality setting on the Extended Address. If extaddr is \*, default received signal strength or link quality for all received messages would be unset.
+
+```bash
+> macfilter rss remove *
+Done
+```
+
+```bash
+> macfilter rss remove 0f6127e33af6b404
+Done
+```
+
+Usage: `macfilter rss clear`
+
+Clear all the received signal strength or received link quality settings.
+
+```bash
+> macfilter rss clear
+Done
+```
+
+### meshdiag
+
+Usage: `meshdiag topology [ip6-addrs] [children]`
 
 Discover network topology (list of routers and their connections).
 
@@ -2510,7 +2802,7 @@ id:62 rloc16:0xf800 ext-addr:ce349873897233a5 ver:4 - br
    children: none
 ```
 
-### meshdiag childtable \<router-rloc16\>
+Usage: `meshdiag childtable <router-rloc16>`
 
 Start a query for child table of a router with a given RLOC16.
 
@@ -2552,7 +2844,7 @@ rloc16:0x6403 ext-addr:ee24e64ecf8c079a ver:4
 Done
 ```
 
-### meshdiag childip6 \<parent-rloc16\>
+Usage: `meshdiag childip6 <parent-rloc16>`
 
 Send a query to a parent to retrieve the IPv6 addresses of all its MTD children.
 
@@ -2569,7 +2861,7 @@ child-rloc16: 0xdc03
 Done
 ```
 
-### meshdiag routerneighbortable \<router-rloc16\>
+Usage: `meshdiag routerneighbortable <router-rloc16>`
 
 Start a query for router neighbor table of a router with a given RLOC16.
 
@@ -2595,7 +2887,7 @@ rloc16:0x7c00 ext-addr:4ed24fceec9bf6d3 ver:4
 Done
 ```
 
-### meshdiag responsetimeout [\<timeout-msec\>]
+Usage: `meshdiag responsetimeout [<timeout-msec>]`
 
 Get or set the response timeout value (in milliseconds).
 
@@ -2616,7 +2908,9 @@ Done
 Done
 ```
 
-### mliid \<iid\>
+### mliid
+
+Usage: `mliid <iid>`
 
 Set the Mesh Local IID.
 
@@ -2629,7 +2923,9 @@ Only for testing/reference device.
 Done
 ```
 
-### mlr reg \<ipaddr\> ... [timeout]
+### mlr
+
+Usage: `mlr reg <ipaddr> ... [timeout]`
 
 Register Multicast Listeners to Primary Backbone Router, with an optional `timeout` (in seconds).
 
@@ -2657,6 +2953,8 @@ Done
 
 ### mode
 
+Usage: `mode`
+
 Get the Thread Device Mode value.
 
 - -: no flags set (rx-off-when-idle, minimal Thread device, stable network data)
@@ -2670,7 +2968,7 @@ rdn
 Done
 ```
 
-### mode [rdn]
+Usage: `mode [rdn]`
 
 Set the Thread Device Mode value.
 
@@ -2691,6 +2989,8 @@ Done
 
 ### multiradio
 
+Usage: `multiradio`
+
 Get the list of supported radio links by the device.
 
 This command is always available, even when only a single radio is supported by the device.
@@ -2701,7 +3001,7 @@ This command is always available, even when only a single radio is supported by 
 Done
 ```
 
-### multiradio neighbor list
+Usage: `multiradio neighbor list`
 
 Get the list of neighbors and their supported radios and their preference.
 
@@ -2714,7 +3014,7 @@ ExtAddr:17df23452ee4a4be, RLOC16:0x1300, Radios:[15.4(255)]
 Done
 ```
 
-### multiradio neighbor \<ext address\>
+Usage: `multiradio neighbor <ext address>`
 
 Get the radio info for specific neighbor with a given extended address.
 
@@ -2726,7 +3026,9 @@ This command is only available when device supports more than one radio link.
 Done
 ```
 
-### nat64 cidr
+### nat64
+
+Usage: `nat64 cidr`
 
 Gets the IPv4 configured CIDR in the NAT64 translator.
 
@@ -2738,7 +3040,7 @@ Gets the IPv4 configured CIDR in the NAT64 translator.
 Done
 ```
 
-### nat64 cidr \<IPv4 address\>
+Usage: `nat64 cidr <IPv4 address>`
 
 Sets the IPv4 CIDR in the NAT64 translator.
 
@@ -2753,7 +3055,7 @@ Note:
 Done
 ```
 
-### nat64 disable
+Usage: `nat64 disable`
 
 Disable NAT64 functions, including the translator and the prefix publishing.
 
@@ -2766,7 +3068,7 @@ This command will reset the mapping table in the translator (if NAT64 translator
 Done
 ```
 
-### nat64 enable
+Usage: `nat64 enable`
 
 Enable NAT64 functions, including the translator and the prefix publishing.
 
@@ -2779,7 +3081,7 @@ This command can be called anytime.
 Done
 ```
 
-### nat64 state
+Usage: `nat64 state`
 
 Gets the state of NAT64 functions.
 
@@ -2815,7 +3117,7 @@ Translator:    Active
 Done
 ```
 
-### nat64 mappings
+Usage: `nat64 mappings`
 
 Get the NAT64 translator mappings.
 
@@ -2833,7 +3135,7 @@ Get the NAT64 translator mappings.
 |          |                               ICMP |    5 |   320 |    5 |   320 |
 ```
 
-### nat64 counters
+Usage: `nat64 counters`
 
 Get the NAT64 translator packet and error counters.
 
@@ -2858,7 +3160,9 @@ Get the NAT64 translator packet and error counters.
 Done
 ```
 
-### neighbor linkquality
+### neighbor
+
+Usage: `neighbor linkquality`
 
 Print link quality info for all neighbors.
 
@@ -2871,7 +3175,7 @@ Print link quality info for all neighbors.
 Done
 ```
 
-### neighbor list
+Usage: `neighbor list`
 
 List RLOC16 of neighbors.
 
@@ -2881,7 +3185,7 @@ List RLOC16 of neighbors.
 Done
 ```
 
-### neighbor table
+Usage: `neighbor table`
 
 Print table of neighbors.
 
@@ -2895,7 +3199,7 @@ Print table of neighbors.
 Done
 ```
 
-### neighbor conntime
+Usage: `neighbor conntime`
 
 Print connection time and age of neighbors.
 
@@ -2918,7 +3222,7 @@ Duration intervals are formatted as `<hh>:<mm>:<ss>` for hours, minutes, and sec
 Done
 ```
 
-### neighbor conntime list
+Usage: `neighbor conntime list`
 
 Print connection time and age of neighbors.
 
@@ -2934,6 +3238,8 @@ Done
 
 ### netstat
 
+Usage: `netstat`
+
 List all UDP sockets.
 
 ```bash
@@ -2947,7 +3253,9 @@ List all UDP sockets.
 Done
 ```
 
-### networkdiagnostic get \<addr\> \<type\> ..
+### networkdiagnostic
+
+Usage: `networkdiagnostic get <addr> <type> ..`
 
 Send network diagnostic request to retrieve tlv of \<type\>s.
 
@@ -2977,7 +3285,7 @@ Rloc16: 0x1800
 Done
 ```
 
-### networkdiagnostic reset \<addr\> \<type\> ..
+Usage: `networkdiagnostic reset <addr> <type> ..`
 
 Send network diagnostic request to reset \<addr\>'s tlv of \<type\>s. Currently `MAC Counters`(9) is supported.
 
@@ -2986,7 +3294,7 @@ Send network diagnostic request to reset \<addr\>'s tlv of \<type\>s. Currently 
 Done
 ```
 
-### networkdiagnostic nonpreferredchannels
+Usage: `networkdiagnostic nonpreferredchannels`
 
 Get or set the non-preferred channels value as a channel mask. This is used to respond to a Network Diagnostics Get request for the corresponding TLV. The channel mask is a 32-bit unsigned integer value where the least significant bit (LSB), also referred to as bit 0, corresponds to channel number 0, and so on.
 
@@ -3001,6 +3309,8 @@ Done
 
 ### networkidtimeout
 
+Usage: `networkidtimeout`
+
 Get the NETWORK_ID_TIMEOUT parameter used in the Router role.
 
 ```bash
@@ -3009,7 +3319,7 @@ Get the NETWORK_ID_TIMEOUT parameter used in the Router role.
 Done
 ```
 
-### networkidtimeout \<timeout\>
+Usage: `networkidtimeout <timeout>`
 
 Set the NETWORK_ID_TIMEOUT parameter used in the Router role.
 
@@ -3020,6 +3330,8 @@ Done
 
 ### networkkey
 
+Usage: `networkkey`
+
 Get the Thread Network Key value.
 
 ```bash
@@ -3028,7 +3340,7 @@ Get the Thread Network Key value.
 Done
 ```
 
-### networkkey \<key\>
+Usage: `networkkey <key>`
 
 Set the Thread Network Key value.
 
@@ -3039,6 +3351,8 @@ Done
 
 ### networkname
 
+Usage: `networkname`
+
 Get the Thread Network Name.
 
 ```bash
@@ -3047,7 +3361,7 @@ OpenThread
 Done
 ```
 
-### networkname \<name\>
+Usage: `networkname <name>`
 
 Set the Thread Network Name.
 
@@ -3060,6 +3374,8 @@ Done
 
 ### networktime
 
+Usage: `networktime`
+
 Get the Thread network time and the time sync parameters.
 
 ```bash
@@ -3070,7 +3386,7 @@ XTAL Threshold:   300ppm
 Done
 ```
 
-### networktime \<timesyncperiod\> \<xtalthreshold\>
+Usage: `networktime <timesyncperiod> <xtalthreshold>`
 
 Set time sync parameters
 
@@ -3083,6 +3399,8 @@ Done
 ```
 
 ### nexthop
+
+Usage: `nexthop`
 
 Output the table of allocated Router IDs and the current next hop (as Router ID) and path cost for each ID.
 
@@ -3099,7 +3417,7 @@ Output the table of allocated Router IDs and the current next hop (as Router ID)
 Done
 ```
 
-### nexthop \<rloc16\>
+Usage: `nexthop <rloc16>`
 
 Get the next hop (as RLOC16) and path cost towards a given RLOC16 destination.
 
@@ -3115,6 +3433,8 @@ Done
 
 ### panid
 
+Usage: `panid`
+
 Get the IEEE 802.15.4 PAN ID value.
 
 ```bash
@@ -3123,7 +3443,7 @@ Get the IEEE 802.15.4 PAN ID value.
 Done
 ```
 
-### panid \<panid\>
+Usage: `panid <panid>`
 
 Set the IEEE 802.15.4 PAN ID value.
 
@@ -3133,6 +3453,8 @@ Done
 ```
 
 ### parent
+
+Usage: `parent`
 
 Get the diagnostic information for a Thread Router as parent.
 
@@ -3158,6 +3480,8 @@ CSL uncertainty: 5
 
 ### parentpriority
 
+Usage: `parentpriority`
+
 Get the assigned parent priority value, -2 means not assigned.
 
 ```bash
@@ -3166,7 +3490,7 @@ Get the assigned parent priority value, -2 means not assigned.
 Done
 ```
 
-### parentpriority \<parentpriority\>
+Usage: `parentpriority <parentpriority>`
 
 Set the assigned parent priority value: 1, 0, -1 or -2.
 
@@ -3177,6 +3501,8 @@ Done
 
 ### partitionid
 
+Usage: `partitionid`
+
 Get the Thread Network Partition ID.
 
 ```bash
@@ -3185,7 +3511,7 @@ Get the Thread Network Partition ID.
 Done
 ```
 
-### partitionid preferred
+Usage: `partitionid preferred`
 
 Get the preferred Thread Leader Partition ID.
 
@@ -3197,7 +3523,7 @@ Get the preferred Thread Leader Partition ID.
 Done
 ```
 
-### partitionid preferred \<partitionid\>
+Usage: `partitionid preferred <partitionid>`
 
 Set the preferred Thread Leader Partition ID.
 
@@ -3208,7 +3534,9 @@ Set the preferred Thread Leader Partition ID.
 Done
 ```
 
-### ping \[async\] \[-I source\] \[-m] \<ipaddr\> \[size\] \[count\] \[interval\] \[hoplimit\] \[timeout\]
+### ping
+
+Usage: `ping [async] [-I source] [-m] <ipaddr> [size] [count] [interval] [hoplimit] [timeout]`
 
 Send an ICMPv6 Echo Request.
 
@@ -3245,7 +3573,7 @@ Pinging synthesized IPv6 address: fdde:ad00:beef:2:0:0:ac11:1
 Done
 ```
 
-### ping stop
+Usage: `ping stop`
 
 Stop sending ICMPv6 Echo Requests.
 
@@ -3255,6 +3583,8 @@ Done
 ```
 
 ### platform
+
+Usage: `platform`
 
 Print the current platform
 
@@ -3266,6 +3596,8 @@ Done
 
 ### pollperiod
 
+Usage: `pollperiod`
+
 Get the customized data poll period of sleepy end device (milliseconds). Only for certification test.
 
 ```bash
@@ -3274,7 +3606,7 @@ Get the customized data poll period of sleepy end device (milliseconds). Only fo
 Done
 ```
 
-### pollperiod \<pollperiod\>
+Usage: `pollperiod <pollperiod>`
 
 Set the customized data poll period for sleepy end device (milliseconds >= 10ms). Only for certification test.
 
@@ -3285,6 +3617,8 @@ Done
 
 ### pskc
 
+Usage: `pskc`
+
 Get pskc in hex format.
 
 ```bash
@@ -3293,9 +3627,9 @@ Get pskc in hex format.
 Done
 ```
 
-### pskc [-p] \<key\>|\<passphrase\>
+Usage: `pskc [-p] <key>|<passphrase>`
 
-With `-p` generate pskc from \<passphrase\> (UTF-8 encoded) together with **current** network name and extended PAN ID, otherwise set pskc as \<key\> (hex format).
+With `-p` generate pskc from <passphrase> (UTF-8 encoded) together with **current** network name and extended PAN ID, otherwise set pskc as <key> (hex format).
 
 ```bash
 > pskc 67c0c203aa0b042bfb5381c47aef4d9e
@@ -3305,6 +3639,8 @@ Done
 ```
 
 ### pskcref
+
+Usage: `pskcref`
 
 Get pskc key reference.
 
@@ -3316,9 +3652,9 @@ Get pskc key reference.
 Done
 ```
 
-### pskcref \<keyref\>
+Usage: `pskcref <keyref>`
 
-Set pskc key reference as \<keyref\>.
+Set pskc key reference as <keyref>.
 
 `OPENTHREAD_CONFIG_PLATFORM_KEY_REFERENCES_ENABLE` is required.
 
@@ -3327,7 +3663,9 @@ Set pskc key reference as \<keyref\>.
 Done
 ```
 
-### preferrouterid \<routerid\>
+### preferrouterid
+
+Usage: `preferrouterid <routerid>`
 
 Prefer a Router ID when solicit router id from Leader.
 
@@ -3338,6 +3676,8 @@ Done
 
 ### prefix
 
+Usage: `prefix`
+
 Get the prefix list in the local Network Data. Note: For the Thread 1.2 border router with backbone capability, the local Domain Prefix would be listed as well (with flag `D`), with preceding `-` if backbone functionality is disabled.
 
 ```bash
@@ -3347,7 +3687,7 @@ Get the prefix list in the local Network Data. Note: For the Thread 1.2 border r
 Done
 ```
 
-### prefix add \<prefix\> [padcrosnD][prf]
+Usage: `prefix add <prefix> [padcrosnD][prf]`
 
 Add a valid prefix to the Network Data.
 
@@ -3372,7 +3712,7 @@ Done
 Done
 ```
 
-### prefix meshlocal
+Usage: `prefix meshlocal`
 
 Get the mesh local prefix.
 
@@ -3382,7 +3722,7 @@ fdde:ad00:beef:0::/64
 Done
 ```
 
-### prefix meshlocal <prefix>
+Usage: `prefix meshlocal <prefix>`
 
 Set the mesh local prefix.
 
@@ -3391,7 +3731,7 @@ Set the mesh local prefix.
 Done
 ```
 
-### prefix remove \<prefix\>
+Usage: `prefix remove <prefix>`
 
 Invalidate a prefix in the Network Data.
 
@@ -3402,6 +3742,8 @@ Done
 
 ### promiscuous
 
+Usage: `promiscuous`
+
 Get radio promiscuous property.
 
 ```bash
@@ -3410,7 +3752,7 @@ Disabled
 Done
 ```
 
-### promiscuous enable
+Usage: `promiscuous enable`
 
 Enable radio promiscuous operation and print raw packet content.
 
@@ -3419,7 +3761,7 @@ Enable radio promiscuous operation and print raw packet content.
 Done
 ```
 
-### promiscuous disable
+Usage: `promiscuous disable`
 
 Disable radio promiscuous operation.
 
@@ -3428,7 +3770,9 @@ Disable radio promiscuous operation.
 Done
 ```
 
-### radio enable
+### radio
+
+Usage: `radio enable`
 
 Enable radio.
 
@@ -3437,7 +3781,7 @@ Enable radio.
 Done
 ```
 
-### radio disable
+Usage: `radio disable`
 
 Disable radio.
 
@@ -3446,7 +3790,7 @@ Disable radio.
 Done
 ```
 
-### radio stats
+Usage: `radio stats`
 
 `OPENTHREAD_CONFIG_RADIO_STATS_ENABLE` is required. This feature is only available on FTD and MTD.
 
@@ -3463,7 +3807,7 @@ Disabled Time: 0.000080s (0.00%)
 Done
 ```
 
-### radio stats clear
+Usage: `radio stats clear`
 
 `OPENTHREAD_CONFIG_RADIO_STATS_ENABLE` is required. This feature is only available on FTD and MTD.
 
@@ -3475,6 +3819,8 @@ Done
 ```
 
 ### radiofilter
+
+Usage: `radiofilter`
 
 `OPENTHREAD_CONFIG_MAC_FILTER_ENABLE` is required.
 
@@ -3490,7 +3836,7 @@ Disabled
 Done
 ```
 
-### radiofilter enable
+Usage: `radiofilter enable`
 
 `OPENTHREAD_CONFIG_MAC_FILTER_ENABLE` is required.
 
@@ -3501,7 +3847,7 @@ Enable radio radio filter.
 Done
 ```
 
-### radiofilter disable
+Usage: `radiofilter disable`
 
 `OPENTHREAD_CONFIG_MAC_FILTER_ENABLE` is required.
 
@@ -3516,7 +3862,19 @@ Done
 
 RCP-related commands.
 
+Usage: `rcp version`
+
+Print RCP version string.
+
+```bash
+> rcp version
+OPENTHREAD/20191113-00825-g82053cc9d-dirty; SIMULATION; Jun  4 2020 17:53:16
+Done
+```
+
 ### region
+
+Usage: `region`
 
 Set the radio region, this can affect the transmit power limit.
 
@@ -3528,17 +3886,9 @@ US
 Done
 ```
 
-### rcp version
+### releaserouterid
 
-Print RCP version string.
-
-```bash
-> rcp version
-OPENTHREAD/20191113-00825-g82053cc9d-dirty; SIMULATION; Jun  4 2020 17:53:16
-Done
-```
-
-### releaserouterid \<routerid\>
+Usage: `releaserouterid <routerid>`
 
 Release a Router ID that has been allocated by the device in the Leader role.
 
@@ -3549,13 +3899,15 @@ Done
 
 ### reset
 
+Usage: `reset`
+
 Signal a platform reset.
 
 ```bash
 > reset
 ```
 
-### reset bootloader
+Usage: `reset bootloader`
 
 Signal a platform reset to bootloader mode, if supported.
 
@@ -3568,6 +3920,8 @@ Done
 
 ### rloc16
 
+Usage: `rloc16`
+
 Get the Thread RLOC16 value.
 
 ```bash
@@ -3578,6 +3932,8 @@ Done
 
 ### route
 
+Usage: `route`
+
 Get the external route list in the local Network Data.
 
 ```bash
@@ -3586,7 +3942,7 @@ Get the external route list in the local Network Data.
 Done
 ```
 
-### route add \<prefix\> [sna][prf]
+Usage: `route add <prefix> [sna][prf]`
 
 Add a valid external route to the Network Data.
 
@@ -3600,7 +3956,7 @@ Add a valid external route to the Network Data.
 Done
 ```
 
-### route remove \<prefix\>
+Usage: `route remove <prefix>`
 
 Invalidate a external route in the Network Data.
 
@@ -3609,7 +3965,9 @@ Invalidate a external route in the Network Data.
 Done
 ```
 
-### router list
+### router
+
+Usage: `router list`
 
 List allocated Router IDs.
 
@@ -3619,7 +3977,7 @@ List allocated Router IDs.
 Done
 ```
 
-### router table
+Usage: `router table`
 
 Print table of routers.
 
@@ -3632,7 +3990,7 @@ Print table of routers.
 Done
 ```
 
-### router \<id\>
+Usage: `router <id>`
 
 Print diagnostic information for a Thread Router. The `id` may be a Router ID or an RLOC16.
 
@@ -3668,6 +4026,8 @@ Done
 
 ### routerdowngradethreshold
 
+Usage: `routerdowngradethreshold`
+
 Get the ROUTER_DOWNGRADE_THRESHOLD value.
 
 ```bash
@@ -3676,7 +4036,7 @@ Get the ROUTER_DOWNGRADE_THRESHOLD value.
 Done
 ```
 
-### routerdowngradethreshold \<threshold\>
+Usage: `routerdowngradethreshold <threshold>`
 
 Set the ROUTER_DOWNGRADE_THRESHOLD value.
 
@@ -3687,6 +4047,8 @@ Done
 
 ### routereligible
 
+Usage: `routereligible`
+
 Indicates whether the router role is enabled or disabled.
 
 ```bash
@@ -3695,7 +4057,7 @@ Enabled
 Done
 ```
 
-### routereligible enable
+Usage: `routereligible enable`
 
 Enable the router role.
 
@@ -3704,7 +4066,7 @@ Enable the router role.
 Done
 ```
 
-### routereligible disable
+Usage: `routereligible disable`
 
 Disable the router role.
 
@@ -3715,6 +4077,8 @@ Done
 
 ### routerselectionjitter
 
+Usage: `routerselectionjitter`
+
 Get the ROUTER_SELECTION_JITTER value.
 
 ```bash
@@ -3723,7 +4087,7 @@ Get the ROUTER_SELECTION_JITTER value.
 Done
 ```
 
-### routerselectionjitter \<jitter\>
+Usage: `routerselectionjitter <jitter>`
 
 Set the ROUTER_SELECTION_JITTER value.
 
@@ -3734,6 +4098,8 @@ Done
 
 ### routerupgradethreshold
 
+Usage: `routerupgradethreshold`
+
 Get the ROUTER_UPGRADE_THRESHOLD value.
 
 ```bash
@@ -3742,7 +4108,7 @@ Get the ROUTER_UPGRADE_THRESHOLD value.
 Done
 ```
 
-### routerupgradethreshold \<threshold\>
+Usage: `routerupgradethreshold <threshold>`
 
 Set the ROUTER_UPGRADE_THRESHOLD value.
 
@@ -3753,6 +4119,8 @@ Done
 
 ### childrouterlinks
 
+Usage: `childrouterlinks`
+
 Get the MLE_CHILD_ROUTER_LINKS value.
 
 ```bash
@@ -3761,7 +4129,7 @@ Get the MLE_CHILD_ROUTER_LINKS value.
 Done
 ```
 
-### childrouterlinks \<number_of_links\>
+Usage: `childrouterlinks <number_of_links>`
 
 Set the MLE_CHILD_ROUTER_LINKS value.
 
@@ -3770,7 +4138,9 @@ Set the MLE_CHILD_ROUTER_LINKS value.
 Done
 ```
 
-### scan \[channel\]
+### scan
+
+Usage: `scan [channel]`
 
 Perform an IEEE 802.15.4 Active Scan.
 
@@ -3784,7 +4154,7 @@ Perform an IEEE 802.15.4 Active Scan.
 Done
 ```
 
-### scan energy \[duration\] \[channel\]
+Usage: `scan energy [duration] [channel]`
 
 Perform an IEEE 802.15.4 Energy Scan.
 
@@ -3825,7 +4195,7 @@ Done
 
 Module for controlling service registration in Network Data. Each change in service registration must be sent to leader by `netdata register` command before taking effect.
 
-### service add \<enterpriseNumber\> \<serviceData\> [\<serverData\>]
+Usage: `service add <enterpriseNumber> <serviceData> [<serverData>]`
 
 Add service to the Network Data.
 
@@ -3840,7 +4210,7 @@ Done
 Done
 ```
 
-### service remove \<enterpriseNumber\> \<serviceData\>
+Usage: `service remove <enterpriseNumber> <serviceData>`
 
 Remove service from Network Data.
 
@@ -3856,6 +4226,8 @@ Done
 
 ### singleton
 
+Usage: `singleton`
+
 Return true when there are no other nodes in the network, otherwise return false.
 
 ```bash
@@ -3864,7 +4236,9 @@ true or false
 Done
 ```
 
-### sntp query \[SNTP server IP\] \[SNTP server port\]
+### sntp
+
+Usage: `sntp query [SNTP server IP] [SNTP server port]`
 
 Send SNTP Query to obtain current unix epoch time (from 1st January 1970). The latter two parameters have following default values:
 
@@ -3885,6 +4259,8 @@ You can use NAT64 of OpenThread Border Router to reach e.g. Google IPv4 NTP Serv
 
 ### state
 
+Usage: `state`
+
 Return state of current state.
 
 ```bash
@@ -3893,7 +4269,7 @@ disabled, detached, child, router or leader
 Done
 ```
 
-### state leader
+Usage: `state leader`
 
 Become a leader and start a new partition
 
@@ -3926,7 +4302,7 @@ Done
 Done
 ```
 
-### state <state>
+Usage: `state <state>`
 
 Try to switch to state `detached`, `child`, `router`.
 
@@ -3935,7 +4311,9 @@ Try to switch to state `detached`, `child`, `router`.
 Done
 ```
 
-### targetpower \<channel\> \<targetpower\>
+### targetpower
+
+Usage: `targetpower <channel> <targetpower>`
 
 Set the target power.
 
@@ -3947,7 +4325,9 @@ Set the target power.
 Done
 ```
 
-### test tmforiginfilter \[enable|disable\]
+### test
+
+Usage: `test tmforiginfilter [enable|disable]`
 
 Enable/disable filter that drops UDP messages sent to the TMF port from untrusted origin. Also get the current state of the filter if no argument is specified.
 
@@ -3979,7 +4359,9 @@ Disabled
 >
 ```
 
-### thread start
+### thread
+
+Usage: `thread start`
 
 Enable Thread protocol operation and attach to a Thread network.
 
@@ -3988,7 +4370,7 @@ Enable Thread protocol operation and attach to a Thread network.
 Done
 ```
 
-### thread stop
+Usage: `thread stop`
 
 Disable Thread protocol operation and detach from a Thread network.
 
@@ -3997,7 +4379,7 @@ Disable Thread protocol operation and detach from a Thread network.
 Done
 ```
 
-### thread version
+Usage: `thread version`
 
 Get the Thread Version number.
 
@@ -4008,6 +4390,8 @@ Done
 ```
 
 ### timeinqueue
+
+Usage: `timeinqueue`
 
 Print the tx queue time-in-queue histogram.
 
@@ -4076,7 +4460,7 @@ The collected statistics can be reset by `timeinqueue reset`.
 Done
 ```
 
-### timeinqueue max
+Usage: `timeinqueue max`
 
 Print the maximum observed time-in-queue in milliseconds.
 
@@ -4089,7 +4473,7 @@ The time-in-queue is tracked for direct transmissions only and is measured as th
 291
 ```
 
-### timeinqueue reset
+Usage: `timeinqueue reset`
 
 Reset the TX queue time-in-queue statistics.
 
@@ -4099,6 +4483,8 @@ Done
 ```
 
 ### trel
+
+Usage: `trel`
 
 Indicate whether TREL radio operation is enabled or not.
 
@@ -4110,7 +4496,7 @@ Enabled
 Done
 ```
 
-### trel enable
+Usage: `trel enable`
 
 Enable TREL operation.
 
@@ -4119,7 +4505,7 @@ Enable TREL operation.
 Done
 ```
 
-### trel disable
+Usage: `trel disable`
 
 Disable TREL operation.
 
@@ -4128,7 +4514,7 @@ Disable TREL operation.
 Done
 ```
 
-### trel filter
+Usage: `trel filter`
 
 Indicate whether TREL filter mode is enabled or not
 
@@ -4140,7 +4526,7 @@ Disabled
 Done
 ```
 
-### trel filter enable
+Usage: `trel filter enable`
 
 Enable TREL filter mode.
 
@@ -4149,7 +4535,7 @@ Enable TREL filter mode.
 Done
 ```
 
-### trel filter disable
+Usage: `trel filter disable`
 
 Disable TREL filter mode.
 
@@ -4158,7 +4544,7 @@ Disable TREL filter mode.
 Done
 ```
 
-### trel peers [list]
+Usage: `trel peers [list]`
 
 Get the TREL peer table in table format or as a list.
 
@@ -4176,7 +4562,7 @@ Done
 Done
 ```
 
-### trel counters
+Usage: `trel counters`
 
 Get the TREL counters.
 
@@ -4187,7 +4573,7 @@ Outbound: Packets 4 Bytes 320 Failures 1
 Done
 ```
 
-### trel counters reset
+Usage: `trel counters reset`
 
 Reset the TREL counters.
 
@@ -4196,7 +4582,7 @@ Reset the TREL counters.
 Done
 ```
 
-### trel port
+Usage: `trel port`
 
 Get the TREL UDP port number.
 
@@ -4206,7 +4592,9 @@ Get the TREL UDP port number.
 Done
 ```
 
-### tvcheck enable
+### tvcheck
+
+Usage: `tvcheck enable`
 
 Enable thread version check when upgrading to router or leader.
 
@@ -4219,7 +4607,7 @@ Note: Thread version check is enabled by default.
 Done
 ```
 
-### tvcheck disable
+Usage: `tvcheck disable`
 
 Disable thread version check when upgrading to router or leader.
 
@@ -4234,6 +4622,8 @@ Done
 
 ### txpower
 
+Usage: `txpower`
+
 Get the transmit power in dBm.
 
 ```bash
@@ -4242,7 +4632,7 @@ Get the transmit power in dBm.
 Done
 ```
 
-### txpower \<txpower\>
+Usage: `txpower <txpower>`
 
 Set the transmit power in dBm.
 
@@ -4251,7 +4641,9 @@ Set the transmit power in dBm.
 Done
 ```
 
-### unsecureport add \<port\>
+### unsecureport
+
+Usage: `unsecureport add <port>`
 
 Add a port to the allowed unsecured port list.
 
@@ -4260,7 +4652,7 @@ Add a port to the allowed unsecured port list.
 Done
 ```
 
-### unsecureport remove \<port\>
+Usage: `unsecureport remove <port>`
 
 Remove a port from the allowed unsecured port list.
 
@@ -4269,7 +4661,7 @@ Remove a port from the allowed unsecured port list.
 Done
 ```
 
-### unsecureport remove all
+Usage: `unsecureport remove all`
 
 Remove all ports from the allowed unsecured port list.
 
@@ -4278,7 +4670,7 @@ Remove all ports from the allowed unsecured port list.
 Done
 ```
 
-### unsecureport get
+Usage: `unsecureport get`
 
 Print all ports from the allowed unsecured port list.
 
@@ -4292,6 +4684,8 @@ Done
 
 This command requires `OPENTHREAD_CONFIG_UPTIME_ENABLE` to be enabled.
 
+Usage: `uptime`
+
 Print the OpenThread stack uptime (duration since OpenThread stack initialization).
 
 ```bash
@@ -4301,7 +4695,7 @@ Done
 >
 ```
 
-### uptime ms
+Usage: `uptime ms`
 
 This command requires `OPENTHREAD_CONFIG_UPTIME_ENABLE` to be enabled.
 
@@ -4314,7 +4708,9 @@ Done
 >
 ```
 
-### vendor name
+### vendor
+
+Usage: `vendor name`
 
 Get the vendor name.
 
@@ -4331,7 +4727,7 @@ Set the vendor name (requires `OPENTHREAD_CONFIG_NET_DIAG_VENDOR_INFO_SET_API_EN
 Done
 ```
 
-### vendor model
+Usage: `vendor model`
 
 Get the vendor model.
 
@@ -4348,7 +4744,7 @@ Set the vendor model (requires `OPENTHREAD_CONFIG_NET_DIAG_VENDOR_INFO_SET_API_E
 Done
 ```
 
-### vendor swversion
+Usage: `vendor swversion`
 
 Get the vendor SW version.
 
@@ -4365,7 +4761,9 @@ Set the vendor SW version (requires `OPENTHREAD_CONFIG_NET_DIAG_VENDOR_INFO_SET_
 Done
 ```
 
-### verhoeff calculate
+### verhoeff
+
+Usage: `verhoeff calculate`
 
 Calculates the Verhoeff checksum for a given decimal string.
 
@@ -4379,7 +4777,7 @@ The input string MUST consist of characters in `['0'-'9']`.
 Done
 ```
 
-### verhoeff validate
+Usage: `verhoeff validate`
 
 Validates the Verhoeff checksum for a given decimal string.
 
@@ -4396,6 +4794,8 @@ Error 1: Failed
 
 ### version
 
+Usage: `version`
+
 Print the build version information.
 
 ```bash
@@ -4404,7 +4804,7 @@ OPENTHREAD/gf4f2f04; Jul  1 2016 17:00:09
 Done
 ```
 
-### version api
+Usage: `version api`
 
 Print API version number.
 
@@ -4630,7 +5030,9 @@ Factory Diagnostics module is enabled only when building OpenThread with `OPENTH
 
 [diag]: ../../src/core/diags/README.md
 
-### wakeup channel
+### wakeup
+
+Usage: `wakeup channel`
 
 Get the wake-up channel.
 
@@ -4642,7 +5044,7 @@ Requires `OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE` or `OPENTHREAD_CONFIG_WAK
 Done
 ```
 
-### wakeup channel \<channel\>
+Usage: `wakeup channel <channel>`
 
 Set the wake-up channel.
 
@@ -4653,7 +5055,7 @@ Requires `OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE` or `OPENTHREAD_CONFIG_WAK
 Done
 ```
 
-### wakeup parameters
+Usage: `wakeup parameters`
 
 Get the wake-up listen interval and duration.
 
@@ -4666,7 +5068,7 @@ duration: 8000us
 Done
 ```
 
-### wakeup parameters \<interval\> \<duration\>
+Usage: `wakeup parameters <interval> <duration>`
 
 Set the wake-up listen interval and duration.
 
@@ -4677,7 +5079,7 @@ Requires `OPENTHREAD_CONFIG_WAKEUP_END_DEVICE_ENABLE`.
 Done
 ```
 
-### wakeup listen
+Usage: `wakeup listen`
 
 Show the state of wake-up listening feature.
 
@@ -4689,7 +5091,7 @@ Enabled
 Done
 ```
 
-### wakeup listen \[enable|disable\]
+Usage: `wakeup listen [enable|disable]`
 
 Enable/disable listening for wake-up frames.
 
@@ -4700,7 +5102,7 @@ Enable/disable listening for wake-up frames.
 Done
 ```
 
-### wakeup wake \<extaddr\> \<wakeup-interval\> \<wakeup-duration\>
+Usage: `wakeup wake <extaddr> <wakeup-interval> <wakeup-duration>`
 
 Wakes a Wake-up End Device.
 

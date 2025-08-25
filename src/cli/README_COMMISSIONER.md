@@ -10,12 +10,13 @@ See [README_COMMISSIONING.md](README_COMMISSIONING.md).
 
 ## Command List
 
+Usage : `commissioner [command] ...`
+
 - [help](#help)
 - [announce](#announce)
 - [energy](#energy)
-- [joiner add](#joiner-add)
-- [joiner remove](#joiner-remove)
-- [joiner table](#joiner-table)
+- [id](#id)
+- [joiner](#joiner)
 - [mgmtget](#mgmtget)
 - [mgmtset](#mgmtset)
 - [panid](#panid)
@@ -85,7 +86,28 @@ Done
 Energy: 00050000 0 0 0 0
 ```
 
-### joiner add
+### id
+
+Usage: `commissioner id`
+
+Get the commissioner id.
+
+```bash
+> commissioner id
+OpenThread Commissioner
+Done
+```
+
+Usage: `commissioner id <name>`
+
+Set the commissioner id.
+
+```bash
+> commissioner id "Custom Commissioner Id"
+Done
+```
+
+### joiner
 
 Usage: `commissioner joiner add <eui64>|<discerner> <pskd> [timeout]`
 
@@ -106,8 +128,6 @@ Done
 Done
 ```
 
-### joiner remove
-
 Usage: `commissioner joiner remove <eui64>|<discerner>`
 
 Remove a Joiner entry.
@@ -124,8 +144,6 @@ Done
 > commissioner joiner remove 0xabc/12
 Done
 ```
-
-### joiner table
 
 Usage: `commissioner joiner table`
 
@@ -201,27 +219,6 @@ Get current commissioner session id.
 ```bash
 > commissioner sessionid
 0
-Done
-```
-
-### id
-
-Usage: `commissioner id`
-
-Get the commissioner id.
-
-```bash
-> commissioner id
-OpenThread Commissioner
-Done
-```
-
-### id \<name\>
-
-Set the commissioner id.
-
-```bash
-> commissioner id "Custom Commissioner Id"
 Done
 ```
 

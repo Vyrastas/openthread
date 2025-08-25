@@ -284,6 +284,8 @@ Normally, an active Commissioner will set a new Pending Operational Dataset. For
 
 ## Command List
 
+Usage : `dataset [command] ...`
+
 - [help](#help)
 - [active](#active)
 - [activetimestamp](#activetimestamp)
@@ -304,6 +306,7 @@ Normally, an active Commissioner will set a new Pending Operational Dataset. For
 - [pendingtimestamp](#pendingtimestamp)
 - [pskc](#pskc)
 - [securitypolicy](#securitypolicy)
+- [set](#set)
 - [tlvs](#tlvs)
 - [updater](#updater)
 - [wakeupchannel](#wakeupchannel)
@@ -394,7 +397,7 @@ Done
 
 ### activetimestamp
 
-Usage: `dataset activetimestamp [timestamp]`
+Usage: `dataset activetimestamp`
 
 Get active timestamp seconds. It represents a "Unix time", in number of seconds since Jan 1st, 1970.
 
@@ -403,6 +406,8 @@ Get active timestamp seconds. It represents a "Unix time", in number of seconds 
 123456789
 Done
 ```
+
+Usage: `dataset activetimestamp <timestamp>`
 
 Set active timestamp seconds.
 
@@ -413,7 +418,7 @@ Done
 
 ### channel
 
-Usage: `channel [channel]`
+Usage: `dataset channel`
 
 Get channel.
 
@@ -422,6 +427,8 @@ Get channel.
 12
 Done
 ```
+
+Usage: `dataset channel <channel>`
 
 Set channel.
 
@@ -432,7 +439,7 @@ Done
 
 ### channelmask
 
-Usage: `dataset channelmask [channelmask]`
+Usage: `dataset channelmask`
 
 Get channel mask.
 
@@ -441,6 +448,8 @@ Get channel mask.
 0x07fff800
 Done
 ```
+
+Usage: `dataset channelmask <channelmask>`
 
 Set channel mask.
 
@@ -473,7 +482,7 @@ Done
 
 ### delay
 
-Usage: `dataset delay [delay]`
+Usage: `dataset delay`
 
 Get delay timer value. The timer value is in milliseconds.
 
@@ -482,6 +491,8 @@ Get delay timer value. The timer value is in milliseconds.
 1000
 Done
 ```
+
+Usage: `dataset delay <delay>`
 
 Set delay timer value.
 
@@ -492,7 +503,7 @@ Done
 
 ### extpanid
 
-Usage: `dataset extpanid [extpanid]`
+Usage: `dataset extpanid`
 
 Get extended panid.
 
@@ -501,6 +512,8 @@ Get extended panid.
 000db80123456789
 Done
 ```
+
+Usage: `dataset extpanid <extpanid>`
 
 Set extended panid.
 
@@ -538,7 +551,7 @@ Done
 
 ### meshlocalprefix
 
-Usage: `dataset meshlocalprefix [prefix]`
+Usage: `dataset meshlocalprefix`
 
 Get mesh local prefix.
 
@@ -547,6 +560,8 @@ Get mesh local prefix.
 fd00:db8:0:0::/64
 Done
 ```
+
+Usage: `dataset meshlocalprefix <prefix>`
 
 Set mesh local prefix.
 
@@ -579,7 +594,7 @@ Done
 
 ### networkkey
 
-Usage: `dataset networkkey [key]`
+Usage: `dataset networkkey`
 
 Get network key
 
@@ -588,6 +603,8 @@ Get network key
 00112233445566778899aabbccddeeff
 Done
 ```
+
+Usage: `dataset networkkey <key>`
 
 Set network key.
 
@@ -598,7 +615,7 @@ Done
 
 ### networkname
 
-Usage: `dataset networkname [name]`
+Usage: `dataset networkname`
 
 Get network name.
 
@@ -607,6 +624,8 @@ Get network name.
 OpenThread
 Done
 ```
+
+Usage: `dataset networkname <name>`
 
 Set network name.
 
@@ -619,7 +638,7 @@ Done
 
 ### panid
 
-Usage: `dataset panid [panid]`
+Usage: `dataset panid`
 
 Get panid.
 
@@ -628,6 +647,8 @@ Get panid.
 0x1234
 Done
 ```
+
+Usage: `dataset panid <panid>`
 
 Set panid.
 
@@ -688,7 +709,7 @@ Done
 
 ### pendingtimestamp
 
-Usage: `dataset pendingtimestamp [timestamp]`
+Usage: `dataset pendingtimestamp`
 
 Get pending timestamp seconds. It represents a "Unix time", in number of seconds since Jan 1st, 1970.
 
@@ -697,6 +718,8 @@ Get pending timestamp seconds. It represents a "Unix time", in number of seconds
 123456789
 Done
 ```
+
+Usage: `dataset pendingtimestamp <timestamp>`
 
 Set pending timestamp seconds.
 
@@ -707,7 +730,7 @@ Done
 
 ### pskc
 
-Usage: `pskc [-p] [<key>|<passphrase>]`
+Usage: `dataset pskc`
 
 Get PSKc.
 
@@ -717,9 +740,11 @@ Get PSKc.
 Done
 ```
 
+Usage: `dataset pskc [-p] [<key>|<passphrase>]`
+
 Set PSKc.
 
-With `-p`(**only for FTD**) generate PSKc from \<passphrase\> (UTF-8 encoded) together with network name and extended PAN ID in the dataset buffer if set or values in the current stack if not, otherwise set PSKc as \<key\> (hex format).
+With `-p`(**only for FTD**) generate PSKc from <passphrase> (UTF-8 encoded) together with network name and extended PAN ID in the dataset buffer if set or values in the current stack if not, otherwise set PSKc as <key> (hex format).
 
 ```bash
 > dataset pskc 67c0c203aa0b042bfb5381c47aef4d9e
@@ -730,7 +755,7 @@ Done
 
 ### securitypolicy
 
-Usage: `dataset securitypolicy [<rotationtime> [onrcCepR] [versionthreshold]]`
+Usage: `dataset securitypolicy`
 
 Get security policy.
 
@@ -739,6 +764,8 @@ Get security policy.
 672 onrc 0
 Done
 ```
+
+Usage: `dataset securitypolicy [<rotationtime> [onrcCepR] [versionthreshold]]`
 
 Set security policy.
 
@@ -814,8 +841,6 @@ Indicate whether there is an ongoing Operation Dataset update request.
 Enabled
 ```
 
-### updater start
-
 Usage: `dataset updater start`
 
 Requires `OPENTHREAD_CONFIG_DATASET_UPDATER_ENABLE`.
@@ -850,8 +875,6 @@ Dataset update complete: OK
 Done
 ```
 
-### updater cancel
-
 Usage: `dataset updater cancel`
 
 Requires `OPENTHREAD_CONFIG_DATASET_UPDATER_ENABLE`.
@@ -874,7 +897,7 @@ Done
 
 ### wakeupchannel
 
-Usage: `wakeupchannel [channel]`
+Usage: `dataset wakeupchannel`
 
 Get wake-up channel.
 
@@ -883,6 +906,8 @@ Get wake-up channel.
 13
 Done
 ```
+
+Usage: `dataset wakeupchannel <channel>`
 
 Set wake-up channel.
 

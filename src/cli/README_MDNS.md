@@ -91,6 +91,8 @@ mDNS IPv6 address result for test-host
 
 ## Command List
 
+Usage : `mdns [command] ...`
+
 - [help](#help)
 - [auto](#auto)
 - [browser](#browser)
@@ -122,6 +124,8 @@ mDNS IPv6 address result for test-host
 
 ### help
 
+Usage: `mdns help`
+
 List the mDNS CLI commands.
 
 ```bash
@@ -140,7 +144,11 @@ Done
 
 ### auto
 
-Usage: `mdns auto [enable|disable]`
+Usage: `mdns auto`
+
+Usage: `mdns auto enable`
+
+Usage: `mdns auto disable`
 
 Requires `OPENTHREAD_CONFIG_BORDER_ROUTING_ENABLE`.
 
@@ -161,11 +169,12 @@ Done
 
 ### browser
 
-Usage: `mdns browser start|stop <service-type> [<sub-type>]`
+Usage: `mdns browser start <service-type> [<sub-type>]`
+
+Usage: `mdns browser stop <service-type> [<sub-type>]`
 
 Starts or stops a browser for a service type or sub-type. The discovered, changed, or removed service instances are reported.
 
-- `start|stop`: Start or stop the browser.
 - `<service-type>`: The service type to browse for (e.g., `_meshcop._udp`).
 - `sub-type`: An optional service sub-type to filter results.
 
@@ -190,6 +199,8 @@ mDNS browse result for _ot._udp sub-type _v
 
 ### browsers
 
+Usage: `mdns browsers`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all currently active service browsers.
@@ -205,6 +216,8 @@ Done
 ```
 
 ### disable
+
+Usage: `mdns disable`
 
 Disables the mDNS module.
 
@@ -228,6 +241,8 @@ Done
 
 ### hosts
 
+Usage: `mdns hosts`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all hosts registered with the local mDNS module.
@@ -244,7 +259,9 @@ Done
 
 ### ip4resolver
 
-Usage: `mdns ip4resolver start|stop <host-name>`
+Usage: `mdns ip4resolver start <host-name>`
+
+Usage: `mdns ip4resolver stop <host-name>`
 
 Starts or stops an IPv4 address resolver (A records) for a given host name.
 
@@ -254,6 +271,8 @@ Done
 ```
 
 ### ip4resolvers
+
+Usage: `mdns ip4resolvers`
 
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
@@ -269,7 +288,9 @@ Done
 
 ### ip6resolver
 
-Usage: `mdns ip6resolver start|stop <host-name>`
+Usage: `mdns ip6resolver start <host-name>`
+
+Usage: `mdns ip6resolver stop <host-name>`
 
 Starts or stops an IPv6 address resolver (AAAA records) for a given host name.
 
@@ -285,6 +306,8 @@ Done
 ```
 
 ### ip6resolvers
+
+Usage: `mdns ip6resolvers`
 
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
@@ -302,6 +325,8 @@ Done
 ```
 
 ### keys
+
+Usage: `mdns keys`
 
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
@@ -322,6 +347,8 @@ Done
 
 ### localhostaddrs
 
+Usage: `mdns localhostaddrs`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all IP addresses of the local host that mDNS is aware of.
@@ -335,7 +362,9 @@ Done
 
 ### localhostname
 
-Usage: `mdns localhostname [<name>]`
+Usage: `mdns localhostname`
+
+Usage: `mdns localhostname <name>`
 
 Gets or sets the local host name used by mDNS.
 
@@ -351,7 +380,9 @@ Done
 
 ### recordquerier
 
-Usage: `mdns recordquerier start|stop <record-type> <first-label> [<next-labels>]`
+Usage: `mdns recordquerier start <record-type> <first-label> [<next-labels>]`
+
+Usage: `mdns recordquerier stop <record-type> <first-label> [<next-labels>]`
 
 Starts or stops a generic DNS record querier.
 
@@ -380,6 +411,8 @@ mDNS result for record 25 and name my-inst _test._udp
 ```
 
 ### recordqueriers
+
+Usage: `mdns recordqueriers`
 
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
@@ -486,6 +519,8 @@ Done
 
 ### services
 
+Usage: `mdns services`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all services registered with the local mDNS module.
@@ -525,7 +560,9 @@ Done
 
 ### srvresolver
 
-Usage : `mdns srvresolver start|stop <service-instance> <service-type>`
+Usage: `mdns srvresolver start <service-instance> <service-type>`
+
+Usage: `mdns srvresolver stop <service-instance> <service-type>`
 
 Starts or stops an SRV record resolver for a specific service instance name.
 
@@ -544,6 +581,8 @@ mDNS SRV result for my-inst for _test._udp
 
 ### srvresolvers
 
+Usage: `mdns srvresolvers`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all currently active SRV resolvers.
@@ -558,6 +597,8 @@ Done
 
 ### state
 
+Usage: `mdns state`
+
 Shows the current operational state of the mDNS module.
 
 ```bash
@@ -568,7 +609,9 @@ Done
 
 ### txtresolver
 
-Usage: `mdns txtresolver start|stop <service-instance> <service-type>`
+Usage: `mdns txtresolver start <service-instance> <service-type>`
+
+Usage: `mdns txtresolver stop <service-instance> <service-type>`
 
 Starts or stops a TXT record resolver for a specific service instance name.
 
@@ -584,6 +627,8 @@ mDNS TXT result for my-inst for _test._udp
 
 ### txtresolvers
 
+Usage: `mdns txtresolvers`
+
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_ENTRY_ITERATION_API_ENABLE`.
 
 Lists all currently active TXT resolvers.
@@ -598,7 +643,11 @@ Done
 
 ### unicastquestion
 
-Usage: `mdns unicastquestion [enable|disable]`
+Usage: `mdns unicastquestion`
+
+Usage: `mdns unicastquestion enable`
+
+Usage: `mdns unicastquestion disable`
 
 Gets or sets whether the mDNS module is allowed to send questions requesting unicast responses referred to as "QU" questions.
 
@@ -658,7 +707,11 @@ Done
 
 ### verboselogging
 
-Usage: `mdns verboselogging [enable|disable]`
+Usage: `mdns verboselogging`
+
+Usage: `mdns verboselogging enable`
+
+Usage: `mdns verboselogging disable`
 
 Requires `OPENTHREAD_CONFIG_MULTICAST_DNS_VERBOSE_LOGGING_ENABLE`.
 

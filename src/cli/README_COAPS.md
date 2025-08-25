@@ -82,19 +82,21 @@ coaps response sent
 
 ## Command List
 
+Usage : `coaps [command] ...`
+
 - [help](#help)
-- [connect](#connect-address)
-- [delete](#delete-uri-path-type-payload)
+- [connect](#connect)
+- [delete](#delete)
 - [disconnect](#disconnect)
-- [get](#get-uri-path-type)
+- [get](#get)
 - [isclosed](#isclosed)
 - [isconnactive](#isconnactive)
 - [isconnected](#isconnected)
-- [post](#post-uri-path-type-payload)
-- [psk](#psk-psk-pskid)
-- [put](#put-uri-path-type-payload)
-- [resource](#resource-uri-path)
-- [set](#set-new-content)
+- [post](#post)
+- [psk](#psk)
+- [put](#put)
+- [resource](#resource)
+- [set](#set)
 - [start](#start)
 - [stop](#stop)
 - [x509](#x509)
@@ -102,6 +104,10 @@ coaps response sent
 ## Command Details
 
 ### help
+
+Usage: `coaps help`
+
+List the CoAPS CLI commands.
 
 ```bash
 > coaps help
@@ -123,9 +129,9 @@ x509
 Done
 ```
 
-List the CoAPS CLI commands.
+### connect
 
-### connect \<address\>
+Usage: `coaps connect <address>`
 
 Establish DTLS session.
 
@@ -137,7 +143,9 @@ Done
 coaps connected
 ```
 
-### delete \<uri-path\> \[type\] \[payload\]
+### delete
+
+Usage: `coaps delete <uri-path> [type] [payload]`
 
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default).
@@ -150,13 +158,17 @@ Done
 
 ### disconnect
 
+Usage: `coaps disconnect`
+
 ```bash
 > coaps disconnect
 coaps disconnected
 Done
 ```
 
-### get \<uri-path\> \[type\]
+### get
+
+Usage: `coaps get <uri-path> [type]`
 
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default). Use "block-<block-size>" if the response should be transferred block-wise. ("block-16","block-32","block-64","block-128","block-256","block-512","block-1024")
@@ -171,7 +183,9 @@ Done
 Done
 ```
 
-### post \<uri-path\> \[type\] \[payload\]
+### post
+
+Usage: `coaps post <uri-path> [type] [payload]`
 
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default). Use "block-<block-size>" to send blocks with random payload. ("block-16","block-32","block-64","block-128","block-256","block-512","block-1024")
@@ -187,7 +201,9 @@ Done
 Done
 ```
 
-### psk \<psk\> \<pskid\>
+### psk
+
+Usage: `coaps psk <psk> <pskid>`
 
 Set DTLS ciphersuite to `TLS_PSK_WITH_AES_128_CCM_8`.
 
@@ -199,7 +215,9 @@ Set DTLS ciphersuite to `TLS_PSK_WITH_AES_128_CCM_8`.
 Done
 ```
 
-### put \<uri-path\> \[type\] \[payload\]
+### put
+
+Usage: `coaps put <uri-path> [type] [payload]`
 
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default). Use "block-<block-size>" to send blocks with random payload. ("block-16","block-32","block-64","block-128","block-256","block-512","block-1024")
@@ -215,7 +233,9 @@ Done
 Done
 ```
 
-### resource \[uri-path\]
+### resource
+
+Usage: `coaps resource [uri-path]`
 
 Sets the URI path for the test resource.
 
@@ -227,7 +247,9 @@ test-resource
 Done
 ```
 
-### set \[new-content\]
+### set
+
+Usage: `coaps set [new-content]`
 
 Sets the content sent by the test resource.
 
@@ -236,7 +258,9 @@ Sets the content sent by the test resource.
 Done
 ```
 
-### start \[check-peer-cert\|max-conn-attempts\]
+### start
+
+Usage: `coaps start [check-peer-cert|max-conn-attempts]`
 
 Starts the application coaps service.
 
@@ -254,6 +278,8 @@ Done
 
 ### stop
 
+Usage: `coaps stop`
+
 Stops the application coaps service.
 
 ```bash
@@ -262,6 +288,8 @@ Done
 ```
 
 ### isconnected
+
+Usage: `coaps isconnected`
 
 Indicates whether or not the CoAP secure service is connected.
 
@@ -273,6 +301,8 @@ Done
 
 ### isconnactive
 
+Usage: `coaps isconnactive`
+
 Indicates whether or not the CoAP secure service connection is active (already connected or establishing a connection).
 
 ```bash
@@ -283,6 +313,8 @@ Done
 
 ### isclosed
 
+Usage: `coaps isclosed`
+
 Indicates whether or not the CoAP secure service is closed.
 
 ```bash
@@ -292,6 +324,8 @@ Done
 ```
 
 ### x509
+
+Usage: `coaps x509`
 
 Set DTLS ciphersuite to `TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8`.
 

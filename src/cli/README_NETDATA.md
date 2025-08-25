@@ -141,6 +141,8 @@ After the device successfully attaches to a Thread network, the device will retr
 
 ## Command List
 
+Usage : `netdata [command] ...`
+
 - [help](#help)
 - [full](#full)
 - [length](#length)
@@ -148,7 +150,7 @@ After the device successfully attaches to a Thread network, the device will retr
 - [publish](#publish)
 - [register](#register)
 - [show](#show)
-- [steeringdata](#steeringdata-check-eui64discerner)
+- [steeringdata](#steeringdata)
 - [unpublish](#unpublish)
 
 ## Command Details
@@ -192,8 +194,6 @@ no
 Done
 ```
 
-### full reset
-
 Usage: `netdata full reset`
 
 Reset the flag tracking whether "net data full" callback was invoked.
@@ -229,8 +229,6 @@ Get the maximum observed length of the Thread Network Data since OT stack initia
 Done
 ```
 
-### maxlength reset
-
 Usage: `netdata maxlength reset`
 
 Reset the tracked maximum length of the Thread Network Data.
@@ -246,19 +244,13 @@ The Network Data Publisher provides mechanisms to limit the number of similar Se
 
 The Publisher requires `OPENTHREAD_CONFIG_NETDATA_PUBLISHER_ENABLE`.
 
-### publish dnssrp
+Usage: `netdata publish dnssrp anycast <seq-num> [<version>]`
 
-Publish DNS/SRP service entry.
+Usage: `netdata publish dnssrp unicast <address> <port> [<version>]`
 
-This command requires `OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE`.
+Usage: `netdata publish dnssrp unicast <port> [<version>]`
 
-The following formats are available:
-
-- `netdata publish dnssrp anycast <seq-num> [<version>]` to publish "DNS/SRP Service Anycast Address" with a given sequence number and version.
-- `netdata publish dnssrp unicast <address> <port> [<version>]` to publish "DNS/SRP Service Unicast Address" with given address, port number and version info. The address/port/version info is included in Service TLV data.
-- `netdata publish dnssrp unicast <port> [<version>]` to publish "DNS/SRP Service Unicast Address" with given port number, version, and the device's mesh-local EID for the address. The address/port/version info is included in Server TLV data.
-
-A new call to `netdata publish dnssrp [anycast|unicast] [...]` command will remove and replace any previous "DNS/SRP Service" entry that was being published (from earlier `netdata publish dnssrp [...]` commands).
+Publish DNS/SRP service entry. This command requires `OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE`. A new call to this command will remove and replace any previous "DNS/SRP Service" entry that was being published.
 
 ```bash
 > netdata publish dnssrp anycast 1 2
@@ -271,7 +263,7 @@ Done
 Done
 ```
 
-### publish prefix \<prefix\> [padcrosnD][prf]
+Usage: `netdata publish prefix <prefix> [padcrosnD][prf]`
 
 Publish an on-mesh prefix entry.
 
@@ -291,7 +283,7 @@ Publish an on-mesh prefix entry.
 Done
 ```
 
-### publish route \<prefix\> [sn][prf]
+Usage: `netdata publish route <prefix> [sn][prf]`
 
 Publish an external route entry.
 
@@ -305,7 +297,7 @@ Publish an external route entry.
 Done
 ```
 
-### publish replace \<old prefix\> \<prefix\> [sn][prf]
+Usage: `netdata publish replace <old prefix> <prefix> [sn][prf]`
 
 Replace a previously published external route entry.
 
@@ -334,7 +326,7 @@ Done
 
 ### show
 
-Usage: `netdata show [local] [-x] [\<rloc16\>]`
+Usage: `netdata show [local] [-x] [<rloc16>]`
 
 Print entries in Network Data, on-mesh prefixes, external routes, services, and 6LoWPAN context information.
 
@@ -453,7 +445,9 @@ Print local Network Data to sync with Leader as hex-encoded TLVs.
 Done
 ```
 
-### netdata steeringdata check \<eui64\>|\<discerner\>
+### steeringdata
+
+Usage: `netdata steeringdata check <eui64>|<discerner>`
 
 Check whether the steering data includes a joiner.
 
@@ -475,18 +469,16 @@ This command unpublishes a previously published Network Data entry.
 
 This command requires `OPENTHREAD_CONFIG_NETDATA_PUBLISHER_ENABLE`.
 
-### unpublish dnssrp
+Usage: `netdata unpublish dnssrp`
 
-Unpublishes DNS/SRP Service entry (available when `OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE` is enabled):
-
-- `netdata unpublish dnssrp` to unpublish "DNS/SRP Service" entry (anycast or unciast).
+Unpublishes DNS/SRP Service entry (available when `OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE` is enabled).
 
 ```bash
 > netdata unpublish dnssrp
 Done
 ```
 
-### unpublish \<prefix\>
+Usage: `netdata unpublish <prefix>`
 
 Unpublishes a previously published on-mesh prefix or external route entry.
 

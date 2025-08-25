@@ -6,6 +6,8 @@ See [README_COMMISSIONING.md](README_COMMISSIONING.md).
 
 ## Command List
 
+Usage : `joiner [command] ...`
+
 - [help](#help)
 - [discerner](#discerner)
 - [id](#id)
@@ -33,18 +35,30 @@ Done
 
 ### discerner
 
-Usage: `joiner discerner [discerner]`
+Usage: `joiner discerner`
 
-Print or set the Joiner Discerner. Note this value takes the place of the place of EUI-64 during the joiner session of Thread commissioning.
+Print the Joiner Discerner. Note this value takes the place of the place of EUI-64 during the joiner session of Thread commissioning.
 
-- discerner: `clear` to clear discerner, `number/length` to set discerner
+```bash
+> joiner discerner
+0xabc/12
+Done
+```
+
+Usage: `joiner discerner <number/length>`
+
+Set the Joiner Discerner.
 
 ```bash
 > joiner discerner 0xabc/12
 Done
-> joiner discerner
-0xabc/12
-Done
+```
+
+Usage: `joiner discerner clear`
+
+Clear the Joiner Discerner.
+
+```bash
 > joiner discerner clear
 Done
 ```
