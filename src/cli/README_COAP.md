@@ -45,22 +45,28 @@ coap response sent
 
 ## Command List
 
+Usage : `coap [command] ...`
+
 - [help](#help)
 - [cancel](#cancel)
-- [delete](#delete-address-uri-path-type-payload)
-- [get](#get-address-uri-path-type)
-- [observe](#observe-address-uri-path-type)
+- [delete](#delete)
+- [get](#get)
+- [observe](#observe)
 - [parameters](#parameters)
-- [post](#post-address-uri-path-type-payload)
-- [put](#put-address-uri-path-type-payload)
-- [resource](#resource-uri-path)
-- [set](#set-new-content)
+- [post](#post)
+- [put](#put)
+- [resource](#resource)
+- [set](#set)
 - [start](#start)
 - [stop](#stop)
 
 ## Command Details
 
 ### help
+
+Usage: `coap help`
+
+List the CoAP CLI commands.
 
 ```bash
 > coap help
@@ -79,9 +85,9 @@ stop
 Done
 ```
 
-List the CoAP CLI commands.
-
 ### cancel
+
+Usage: `coap cancel`
 
 Request the cancellation of an existing observation subscription to a remote resource.
 
@@ -90,7 +96,9 @@ Request the cancellation of an existing observation subscription to a remote res
 Done
 ```
 
-### delete \<address\> \<uri-path\> \[type\] \[payload\]
+### delete
+
+Usage: `coap delete <address> <uri-path> [type] [payload]`
 
 - address: IPv6 address of the CoAP server.
 - uri-path: URI path of the resource.
@@ -102,7 +110,9 @@ Done
 Done
 ```
 
-### get \<address\> \<uri-path\> \[type\]
+### get
+
+Usage: `coap get <address> <uri-path> [type]`
 
 - address: IPv6 address of the CoAP server.
 - uri-path: URI path of the resource.
@@ -118,7 +128,9 @@ Done
 Done
 ```
 
-### observe \<address\> \<uri-path\> \[type\]
+### observe
+
+Usage: `coap observe <address> <uri-path> [type]`
 
 This is the same a `get`, but the `Observe` parameter will be sent, set to 0 triggering a subscription request.
 
@@ -131,7 +143,9 @@ This is the same a `get`, but the `Observe` parameter will be sent, set to 0 tri
 Done
 ```
 
-### parameters \<type\> \["default"|<ack_timeout\> <ack_random_factor_numerator\> <ack_random_factor_denominator\> <max_retransmit\>\]
+### parameters
+
+Usage: `coap parameters <type> ["default"|<ack_timeout> <ack_random_factor_numerator> <ack_random_factor_denominator> <max_retransmit>]`
 
 Sets transmission parameters for the following interactions.
 
@@ -168,12 +182,14 @@ ACK_TIMEOUT=1000 ms, ACK_RANDOM_FACTOR=255/254, MAX_RETRANSMIT=2
 Done
 ```
 
-### post \<address\> \<uri-path\> \[type\] \[payload\]
+### post
+
+Usage: `coap post <address> <uri-path> [type] [payload]`
 
 - address: IPv6 address of the CoAP server.
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default). Use "block-<block-size>" to send blocks with random payload. ("block-16","block-32","block-64","block-128","block-256","block-512","block-1024")
-- payload: CoAP request payload. If \[type\] is "block-<block-size>", the amount of blocks to be sent can be set here.
+- payload: CoAP request payload. If [type] is "block-<block-size>", the amount of blocks to be sent can be set here.
 
 ```bash
 > coap post fdde:ad00:beef:0:2780:9423:166c:1aac test-resource con payload
@@ -185,12 +201,14 @@ Done
 Done
 ```
 
-### put \<address\> \<uri-path\> \[type\] \[payload\]
+### put
+
+Usage: `coap put <address> <uri-path> [type] [payload]`
 
 - address: IPv6 address of the CoAP server.
 - uri-path: URI path of the resource.
 - type: "con" for Confirmable or "non-con" for Non-confirmable (default). Use "block-<block-size>" to send blocks with random payload. ("block-16","block-32","block-64","block-128","block-256","block-512","block-1024")
-- payload: CoAP request payload. If \[type\] is "block-<block-size>", the amount of blocks to be sent can be set here.
+- payload: CoAP request payload. If [type] is "block-<block-size>", the amount of blocks to be sent can be set here.
 
 ```bash
 > coap put fdde:ad00:beef:0:2780:9423:166c:1aac test-resource con payload
@@ -202,7 +220,9 @@ Done
 Done
 ```
 
-### resource \[uri-path\]
+### resource
+
+Usage: `coap resource [uri-path]`
 
 Sets the URI path for the test resource.
 
@@ -214,7 +234,9 @@ test-resource
 Done
 ```
 
-### set \[new-content\]
+### set
+
+Usage: `coap set [new-content]`
 
 Sets the content sent by the test resource. If a CoAP client is observing the resource, a notification is sent to that client.
 
@@ -225,6 +247,8 @@ Done
 
 ### start
 
+Usage: `coap start`
+
 Starts the application coap service.
 
 ```bash
@@ -233,6 +257,8 @@ Done
 ```
 
 ### stop
+
+Usage: `coap stop`
 
 Stops the application coap service.
 
