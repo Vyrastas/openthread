@@ -416,8 +416,6 @@ Sets additional options to append at the end of emitted Router Advertisement (RA
 Done
 ```
 
-### raoptions clear
-
 Usage: `br raoptions clear`
 
 Clear any previously set additional options to append at the end of emitted Router Advertisement (RA) messages.
@@ -463,8 +461,6 @@ med
 Done
 ```
 
-### rioprf \<prf\>
-
 Usage: `br rioprf high|med|low`
 
 Set the preference (which may be 'high', 'med', or 'low') to use when advertising Route Info Options (e.g., for discovered OMR prefixes) in emitted Router Advertisement message.
@@ -473,8 +469,6 @@ Set the preference (which may be 'high', 'med', or 'low') to use when advertisin
 > br rioprf low
 Done
 ```
-
-### rioprf clear
 
 Usage: `br rioprf clear`
 
@@ -497,8 +491,6 @@ med
 Done
 ```
 
-### routeprf \<prf\>
-
 Usage: `br routeprf high|med|low`
 
 Set the preference (which may be 'high', 'med', or 'low') to use publishing routes in Thread Network Data. Setting a preference value overrides the automatic route preference determination. It is used only for an explicit administrative configuration of a Border Router.
@@ -507,8 +499,6 @@ Set the preference (which may be 'high', 'med', or 'low') to use publishing rout
 > br routeprf low
 Done
 ```
-
-### routeprf clear
 
 Usage: `br routeprf clear`
 
