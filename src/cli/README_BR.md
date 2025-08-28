@@ -2,19 +2,21 @@
 
 ## Command List
 
-Usage : `br [command] ...`
-
 - [counters](#counters)
 - [disable](#disable)
 - [enable](#enable)
-- [help](#help)
-- [init](#init)
-- [nat64prefix](#nat64prefix)
-- [omrprefix](#omrprefix)
-- [onlinkprefix](#onlinkprefix)
-- [pd](#pd)
+- [init](#init-interface-enabled)
+- [infraif](#infraif)
+- [multiail](#multiail)
+- [nat64prefix](#nat64prefix-localfavored)
+- [omrconfig](#omrconfig)
+- [omrprefix](#omrprefix-localfavored)
+- [onlinkprefix](#onlinkprefix-localfavored)
+- [pd](#pd-enabledisable)
 - [peers](#peers)
 - [prefixtable](#prefixtable)
+- [raoptions](#raoptions-options)
+- [rdnsstable](#rdnsstable)
 - [rioprf](#rioprf)
 - [routeprf](#routeprf)
 - [routers](#routers)
@@ -22,36 +24,7 @@ Usage : `br [command] ...`
 
 ## Command Details
 
-### help
-
-Usage: `br help`
-
-Print BR command help menu.
-
-```bash
-> br help
-counters
-disable
-enable
-multiail
-omrconfig
-omrprefix
-onlinkprefix
-pd
-peers
-prefixtable
-raoptions
-rdnsstable
-rioprf
-routeprf
-routers
-state
-Done
-```
-
-### init
-
-Usage: `br init <interface> <enabled>`
+### init \<interface\> \<enabled\>
 
 Initializes the Border Routing Manager on given infrastructure interface.
 
@@ -61,8 +34,6 @@ Done
 ```
 
 ### infraif
-
-Usage: `br infraif`
 
 Get the interface index and running state of the configured infrastructure interface.
 
@@ -74,8 +45,6 @@ Done
 
 ### enable
 
-Usage: `br enable`
-
 Enable the Border Routing functionality.
 
 ```bash
@@ -85,8 +54,6 @@ Done
 
 ### disable
 
-Usage: `br disable`
-
 Disable the Border Routing functionality.
 
 ```bash
@@ -95,8 +62,6 @@ Done
 ```
 
 ### state
-
-Usage: `br state`
 
 Get the Border Routing state:
 
@@ -111,8 +76,6 @@ running
 ```
 
 ### counters
-
-Usage : `br counters`
 
 Get the Border Router counter.
 
@@ -132,8 +95,6 @@ Done
 ```
 
 ### multiail
-
-Usage : `br multiail`
 
 Requires `OPENTHREAD_CONFIG_BORDER_ROUTING_MULTI_AIL_DETECTION_ENABLE`.
 
@@ -155,7 +116,7 @@ detected
 Done
 ```
 
-Usage: `br multiail callback enable|disable`
+### multiail callback enable|disable
 
 Enable or disable callback to be notified of changes in the multi-AIL detection state.
 
@@ -174,8 +135,6 @@ BR multi AIL callback: cleared
 
 ### omrconfig
 
-Usage: `br omrconfig`
-
 Get the current OMR prefix configuration mode.
 
 The possible modes are:
@@ -190,11 +149,11 @@ auto
 Done
 ```
 
-Usage: `br omrconfig auto`
+### omrconfig auto
 
 Set the current OMR prefix configuration mode to `auto`.
 
-```
+```bash
 > br omrconfig auto
 Done
 
@@ -203,11 +162,11 @@ auto
 Done
 ```
 
-Usage: `br omrconfig custom <prefix> [high|med|low]`
+### omrconfig custom \<prefix\> [high|med|low]
 
 Set the current OMR prefix configuration mode to `custom`
 
-```
+```bash
 > br omrconfig custom fd00::/64 med
 Done
 
@@ -216,11 +175,11 @@ custom (fd00:0:0:0::/64, prf:med)
 Done
 ```
 
-Usage: `br omrconfig disable`
+### omrconfig disable
 
 Set the current OMR prefix configuration mode to `disabled`
 
-```
+```bash
 > br omrconfig disable
 Done
 
@@ -229,9 +188,7 @@ disabled
 Done
 ```
 
-### omrprefix
-
-Usage: `br omrprefix [local|favored]`
+### omrprefix [local|favored]
 
 Get local or favored or both off-mesh-routable prefixes of the Border Router.
 
@@ -250,9 +207,7 @@ fdfc:1ff5:1512:5622::/64
 Done
 ```
 
-### onlinkprefix
-
-Usage: `br onlinkprefix [local|favored]`
+### onlinkprefix [local|favored]
 
 Get local or favored or both on-link prefixes of the Border Router.
 
@@ -271,9 +226,7 @@ fd41:2650:a6f5:0::/64
 Done
 ```
 
-### nat64prefix
-
-Usage: `br nat64prefix [local|favored]`
+### nat64prefix [local|favored]
 
 Get local or favored or both NAT64 prefixes of the Border Router.
 
@@ -294,9 +247,7 @@ fd14:1078:b3d5:b0b0:0:0::/96
 Done
 ```
 
-### pd
-
-Usage: `br pd [enable|disable]`
+### pd [enable|disable]
 
 Enable/Disable the DHCPv6 PD.
 
@@ -308,7 +259,7 @@ Done
 Done
 ```
 
-Usage: `br pd state`
+### pd state
 
 Get the state of DHCPv6 PD.
 
@@ -324,7 +275,7 @@ running
 Done
 ```
 
-Usage `br pd omrprefix`
+### pd omrprefix
 
 Get the DHCPv6 Prefix Delegation (PD) provided off-mesh-routable (OMR) prefix.
 
@@ -337,8 +288,6 @@ Done
 ```
 
 ### peers
-
-Usage: `br peers`
 
 Get the list of peer BRs found in the Network Data.
 
@@ -364,7 +313,7 @@ rloc16:0xf800 age:00:01:51
 Done
 ```
 
-Usage: `br peers count`
+### peers count
 
 Gets the number of peer BRs found in the Network Data.
 
@@ -379,8 +328,6 @@ Done
 ```
 
 ### prefixtable
-
-Usage: `br prefixtable`
 
 Get the discovered prefixes by Border Routing Manager on the infrastructure link.
 
@@ -405,9 +352,7 @@ prefix:1200:abba:baba:0::/64, on-link:yes, ms-since-rx:29527, lifetime:1800, pre
 Done
 ```
 
-### raoptions
-
-Usage: `br raoptions <options>`
+### raoptions \<options\>
 
 Sets additional options to append at the end of emitted Router Advertisement (RA) messages. `<options>` provided as hex bytes.
 
@@ -418,8 +363,6 @@ Done
 
 ### raoptions clear
 
-Usage: `br raoptions clear`
-
 Clear any previously set additional options to append at the end of emitted Router Advertisement (RA) messages.
 
 ```bash
@@ -428,8 +371,6 @@ Done
 ```
 
 ### rdnsstable
-
-Usage: `br rdnsstable`
 
 Get the discovered Recursive DNS Server (RDNSS) address table by Border Routing Manager on the infrastructure link.
 
@@ -453,8 +394,6 @@ Done
 
 ### rioprf
 
-Usage: `br rioprf`
-
 Get the preference used when advertising Route Info Options (e.g., for discovered OMR prefixes) in emitted Router Advertisement message.
 
 ```bash
@@ -465,8 +404,6 @@ Done
 
 ### rioprf \<prf\>
 
-Usage: `br rioprf high|med|low`
-
 Set the preference (which may be 'high', 'med', or 'low') to use when advertising Route Info Options (e.g., for discovered OMR prefixes) in emitted Router Advertisement message.
 
 ```bash
@@ -476,8 +413,6 @@ Done
 
 ### rioprf clear
 
-Usage: `br rioprf clear`
-
 Clear a previously set preference value for advertising Route Info Options (e.g., for discovered OMR prefixes) in emitted Router Advertisement message. When cleared BR will use device's role to determine the RIO preference: Medium preference when in router/leader role and low preference when in child role.
 
 ```bash
@@ -486,8 +421,6 @@ Done
 ```
 
 ### routeprf
-
-Usage: `br routeprf`
 
 Get the preference used for publishing routes in Thread Network Data. This may be the automatically determined route preference, or an administratively set fixed route preference - if applicable.
 
@@ -499,8 +432,6 @@ Done
 
 ### routeprf \<prf\>
 
-Usage: `br routeprf high|med|low`
-
 Set the preference (which may be 'high', 'med', or 'low') to use publishing routes in Thread Network Data. Setting a preference value overrides the automatic route preference determination. It is used only for an explicit administrative configuration of a Border Router.
 
 ```bash
@@ -510,8 +441,6 @@ Done
 
 ### routeprf clear
 
-Usage: `br routeprf clear`
-
 Clear a previously set preference value for publishing routes in Thread Network Data. When cleared BR will automatically determine the route preference based on device's role and link quality to parent (when acting as end-device).
 
 ```bash
@@ -520,8 +449,6 @@ Done
 ```
 
 ### routers
-
-Usage: `br routers`
 
 Get the list of discovered routers by Border Routing Manager on the infrastructure link.
 
